@@ -16,7 +16,7 @@ body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;backg
 .stage{flex:1;position:relative;min-width:0;height:calc(100% - 40px)}
 .note{position:fixed;left:480px;right:0;bottom:0;height:40px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#5c6370;letter-spacing:-.02em;padding:0 16px;text-align:center}
 #fit{position:absolute;left:50%;top:24px;display:flex;align-items:flex-start;gap:24px;transform-origin:top center}
-.col{width:400px}.col[hidden]{display:none}.col h2{height:44px;font-size:15px;font-weight:700;color:#333;text-align:center;line-height:20px}
+.col{width:400px}.swap{display:block;margin:12px auto 0;font:600 13px Pretendard,sans-serif;color:#105aff;background:#fff;border:1px solid #c9d6f5;border-radius:16px;padding:8px 16px;cursor:pointer;text-decoration:underline}.col[hidden]{display:none}.col h2{height:44px;font-size:15px;font-weight:700;color:#333;text-align:center;line-height:20px}
 .col h2 span{display:block;font-size:12px;font-weight:500;color:#5c6370;margin-top:2px}
 iframe{display:block;border:0;width:400px;height:850px;background:transparent}
 .reset{position:fixed;right:16px;top:12px;font-size:12px;color:#5c6370;background:#fff;border:0;padding:6px 10px;border-radius:8px;cursor:pointer;font-family:inherit;z-index:2}
@@ -27,15 +27,17 @@ iframe{display:block;border:0;width:400px;height:850px;background:transparent}
 <div class="specwrap" id="sw" data-ckey="spec-p1"><img id="simg" src="spec/p1.jpg" alt="설계서"></div></aside>
 <div class="lb" id="lb"><img id="limg" alt=""></div>
 <main class="stage"><div id="fit">
- <div class="col"><iframe src="A.html?nospec" title="A안"></iframe></div>
- <div class="col" hidden><iframe src="B.html?nospec" title="B안"></iframe></div>
-</div></main>
+ <div class="col"><iframe id="proto" src="A.html?nospec" title="프로토타입"></iframe><button class="swap" id="swap" type="button">검색필드에서 조회조건 설정</button></div>
+ </div></main>
 <footer class="note">*본 프로토타입은 참고용으로 제작된 것으로 최종 디자인 산출물이 아니며, 최종 산출물은 피그마 파일을 확인해 주세요.</footer>
 <script>
 const fit=document.getElementById('fit'),stage=document.querySelector('.stage');
 function go(){const w=fit.offsetWidth,h=fit.offsetHeight,s=Math.min(1,(stage.clientWidth-24)/w,(stage.clientHeight-48)/h);fit.style.transform=`translate(-50%,0) scale(${s})`}
 addEventListener('resize',go);go();
-document.getElementById('reset').onclick=()=>document.querySelectorAll('iframe').forEach(f=>f.contentWindow.location.reload());
+document.getElementById('reset').onclick=()=>proto.contentWindow.location.reload();
+
+const proto=document.getElementById('proto'),swap=document.getElementById('swap');let isB=false;
+swap.onclick=()=>{isB=!isB;proto.src=(isB?'B.html':'A.html')+'?nospec';swap.textContent=isB?'필터 아이콘에서 조회조건 설정':'검색필드에서 조회조건 설정';go()};
 </script><script>
 const PAGES=['첫 화면','검색 결과','탭·유형 전체','예외 상태','품목 이동','거래처·구매처 상세','원전표','상태별 노출','표시 자릿수'];
 let cur=1,matched=1;
