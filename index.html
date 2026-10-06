@@ -7,7 +7,7 @@ body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;backg
 .specpane h2{font-size:15px;font-weight:700;color:#233a73;margin-bottom:12px}
 .specpane img{display:block;width:100%;border-radius:12px;background:#fff;box-shadow:0 2px 12px rgba(35,58,115,.12)}
 .stage{flex:1;position:relative;min-width:0}
-#fit{position:absolute;left:50%;top:50%;display:flex;align-items:flex-start;gap:24px;transform-origin:center center}
+#fit{position:absolute;left:50%;top:24px;display:flex;align-items:flex-start;gap:24px;transform-origin:top center}
 .col{width:400px}.col h2{height:44px;font-size:15px;font-weight:700;color:#333;text-align:center;line-height:20px}
 .col h2 span{display:block;font-size:12px;font-weight:500;color:#5c6370;margin-top:2px}
 iframe{display:block;border:0;width:400px;height:850px;background:transparent}
@@ -21,7 +21,7 @@ iframe{display:block;border:0;width:400px;height:850px;background:transparent}
 </div></main>
 <script>
 const fit=document.getElementById('fit'),stage=document.querySelector('.stage');
-function go(){const w=fit.offsetWidth,h=fit.offsetHeight,s=Math.min(1,(stage.clientWidth-24)/w,(stage.clientHeight-24)/h);fit.style.transform=`translate(-50%,-50%) scale(${s})`}
+function go(){const w=fit.offsetWidth,h=fit.offsetHeight,s=Math.min(1,(stage.clientWidth-24)/w,(stage.clientHeight-48)/h);fit.style.transform=`translate(-50%,0) scale(${s})`}
 addEventListener('resize',go);go();
 document.getElementById('reset').onclick=()=>document.querySelectorAll('iframe').forEach(f=>f.contentWindow.location.reload());
 </script><script src="comments.js"></script></body></html>
