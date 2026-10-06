@@ -11,7 +11,7 @@ body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;backg
 .wrap{flex:1;display:flex;min-height:0}
 .specpane{width:480px;flex:none;height:100%;background:#e3ebff;border-right:1px solid #c9d6f5;overflow-y:auto;padding:24px 20px}
 .specpane h2{font-size:15px;font-weight:700;color:#233a73;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
-.specpane h2 button{font:600 12px Pretendard,sans-serif;color:#233a73;background:#fff;border:1px solid #c9d6f5;border-radius:6px;padding:4px 8px;cursor:pointer}
+.zoom{display:block;margin:16px auto 0;font:600 13px Pretendard,sans-serif;color:#233a73;background:#fff;border:1px solid #c9d6f5;border-radius:8px;padding:9px 20px;cursor:pointer}
 .pg{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
 .pg button{font:600 12px Pretendard,sans-serif;color:#4a5f93;background:#f3f6ff;border:1px solid #c9d6f5;border-radius:14px;padding:5px 10px;cursor:pointer}
 .pg button.on{background:#233a73;border-color:#233a73;color:#fff}
@@ -29,9 +29,10 @@ iframe{display:block;border:0;width:400px;height:850px;background:transparent}
 </style></head><body>
 <header class="hdr"><span class="logo">SmartA10 물류관리 모바일</span><nav class="hnav" id="menu"><button data-m="dash">대시보드</button><button data-m="search" class="on">통합검색</button><button data-m="deliv">출고예정납기현황</button></nav><span class="sp"></span><button class="reset" id="reset">처음부터 다시</button></header>
 <div class="wrap">
-<aside class="specpane"><h2><span>설계서 <small id="stitle" style="font-weight:500;color:#5b6f9f">SmartA10 모바일 통합검색 디자인요청</small></span><button id="zoom">크게 보기</button></h2>
+<aside class="specpane"><h2><span>설계서 <small id="stitle" style="font-weight:500;color:#5b6f9f">SmartA10 모바일 통합검색 디자인요청</small></span></h2>
 <div class="pg" id="pg"></div><div class="match-note" id="mn"></div>
-<div class="specwrap" id="sw" data-ckey="spec-p1"><img id="simg" src="spec/p1.jpg" alt="설계서"></div></aside>
+<div class="specwrap" id="sw" data-ckey="spec-p1"><img id="simg" src="spec/p1.jpg" alt="설계서"></div>
+<button class="zoom" id="zoom">크게 보기</button></aside>
 <div class="lb" id="lb"><img id="limg" alt=""></div>
 <main class="stage"><div id="fit">
  <div class="col"><iframe id="proto" src="A.html?nospec" title="프로토타입"></iframe><button class="swap" id="swap" type="button">검색필드에서 조회조건 설정</button></div>
