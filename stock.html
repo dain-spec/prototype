@@ -1,0 +1,53 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>재고자산명세서</title>
+<style>
+:root{--pri:#105aff;--t1:#333;--t2:#777;--line:#e1e1e1;--red:#fa4553}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;background:#d9dce2;display:flex;justify-content:center;align-items:center;min-height:100vh;color:var(--t1);letter-spacing:-.02em}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.phone{width:375px;height:812px;background:#fff;position:relative;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08);border-radius:32px;display:flex;flex-direction:column}
+.status{height:44px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:0 28px;font-size:15px;font-weight:600}
+.bar{height:48px;flex:none;display:flex;align-items:center;gap:8px;padding:0 16px}.back{width:24px;height:24px;flex:none}.back svg{width:24px;height:24px;stroke-width:1.8}
+.bar h2{font-size:18px;font-weight:700}
+.body{flex:1;overflow-y:auto;min-height:0;padding:20px 16px 0}.body::-webkit-scrollbar{display:none}
+.title{display:flex;align-items:center;justify-content:space-between;gap:8px}.title h1{font-size:24px;font-weight:700;line-height:34px}
+.badge{height:24px;padding:0 8px;border-radius:12px;border:1px solid var(--red);color:var(--red);font-size:12px;font-weight:500;display:inline-flex;align-items:center;white-space:nowrap}
+.info{margin-top:16px;padding:12px 16px;border-radius:12px;background:#f0f4fa;display:grid;grid-template-columns:1fr 1fr;gap:12px 8px}
+.info dt{font-size:14px;color:#50596c;line-height:20px}.info dd{font-size:15px;font-weight:500;line-height:21px;margin-top:2px}
+.rows{margin-top:24px}.row{height:48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ededed;font-size:16px;font-weight:500}.row:last-child{border-bottom:0}
+.row b{font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:4px}.row b.red{color:var(--t1)}
+.ico{width:16px;height:16px;fill:var(--red);stroke:none;flex:none}
+.warn{margin-top:20px;padding:16px;border-radius:12px;background:#fdf4f5;border:1px solid #f4e1e4}
+.warn h3{display:flex;align-items:center;gap:4px;font-size:15px;font-weight:700;color:var(--red);line-height:21px}.warn p{margin-top:6px;font-size:14px;line-height:20px}
+.btns{flex:none;display:flex;gap:8px;padding:12px 16px 34px}.btns button{height:44px;border-radius:8px;font-size:15px}
+.b1{flex:1;border:1px solid var(--line);background:#fff}.b2{flex:1;background:var(--pri);color:#fff;font-weight:700}
+.home{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#000;z-index:30}
+.toast{position:absolute;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(26,29,35,.92);color:#fff;font-size:13px;padding:11px 16px;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;z-index:40;white-space:nowrap}.toast.show{opacity:1}
+</style></head><body>
+<div class="phone">
+<div class="status"><span>9:41</span><span>●●● 100%</span></div>
+<div class="bar"><button class="back" id="back" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></button><h2>재고자산명세서</h2></div>
+<div class="body">
+ <div class="title"><h1 id="name">스마트A10 프린터</h1><span class="badge">안전재고 미달</span></div>
+ <dl class="info">
+  <div><dt>품목코드</dt><dd>P10001</dd></div><div><dt>품목코드</dt><dd>SPA10-BK / EA</dd></div>
+  <div><dt>현재고</dt><dd>120EA</dd></div><div><dt>가용재고</dt><dd>95EA</dd></div>
+ </dl>
+ <div class="rows">
+  <div class="row"><span>상태</span><b><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6.5v7M12 16.5v1.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>90EA 부족</b></div>
+  <div class="row"><span>안전재고</span><b>120EA</b></div>
+  <div class="row"><span>재고금액</span><b>37,500,000원</b></div>
+ </div>
+ <div class="warn"><h3><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6.5v7M12 16.5v1.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>안전재고 미달</h3><p>발주 등록은 SmartA10 웹에서 진행합니다.</p></div>
+</div>
+<div class="btns"><button class="b1" id="prev">이전</button><button class="b2" id="wh">창고별 재고</button></div>
+<div class="home"></div><div class="toast"></div></div>
+<script>
+const $=s=>document.querySelector(s),P=new URLSearchParams(location.search);
+function toast(m){const t=$('.toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2200)}
+if(P.get('n'))$('#name').textContent=P.get('n');
+const goBack=()=>{if(/\/item\.html/.test(document.referrer))return history.back();location.href='item.html?'+P.toString()};
+$('#back').onclick=$('#prev').onclick=goBack;
+$('#wh').onclick=()=>toast('창고별 재고현황 화면은 준비 중입니다.');
+try{if(parent!==window)parent.postMessage({specPage:5},'*')}catch(e){}
+</script><script src="comments.js"></script><script src="fit.js"></script></body></html>
