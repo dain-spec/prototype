@@ -1,0 +1,79 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>구매처 채무 상세</title>
+<style>
+:root{--pri:#105aff;--t1:#333;--t2:#777;--line:#e1e1e1}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;background:#d9dce2;display:flex;justify-content:center;align-items:center;min-height:100vh;color:var(--t1);letter-spacing:-.02em}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.phone{width:375px;height:812px;background:#fff;position:relative;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08);border-radius:32px;display:flex;flex-direction:column}
+.status{height:44px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:0 28px;font-size:15px;font-weight:600}
+.bar{height:48px;flex:none;display:flex;align-items:center;padding:0 16px}.back{width:24px;height:24px}.back svg{width:24px;height:24px;stroke-width:1.8}
+.scroll{flex:1;overflow-y:auto;min-height:0;background:#f0f2f7}.scroll::-webkit-scrollbar{display:none}
+.top{background:#fff;padding:20px 16px 24px}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.meta{display:flex;align-items:center;gap:4px;font-size:14px;color:var(--t2);line-height:24px;white-space:nowrap}
+.meta .bm{height:24px;padding:0 6px;border-radius:6px;background:#ededed;color:#333;font-size:16px;font-weight:700;display:inline-flex;align-items:center;margin-right:2px}
+.meta i{font-style:normal;color:#ccc}
+.head h1{font-size:24px;font-weight:700;line-height:34px;margin-top:2px}
+.btn-info{height:36px;padding:0 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;flex:none;margin-top:2px}
+.sum{margin-top:16px;padding:16px;border-radius:12px;background:#f0f4fa}
+.sr{display:flex;justify-content:space-between;align-items:center;height:32px;font-size:14px;color:#50596c}.sr b{font-size:15px;font-weight:500;color:var(--t1)}
+.hr{height:1px;background:#d9deea;margin:8px 0}
+.big{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 0}
+.big .l{font-size:15px;font-weight:500;line-height:21px}.big .l small{display:block;font-size:13px;color:var(--t2);margin-top:4px;font-weight:400;line-height:18px}
+.big .r{text-align:right;font-size:16px;font-weight:700;line-height:22px}.big .r small{display:block;font-size:14px;color:var(--t2);margin-top:4px;line-height:20px}
+.bal{display:flex;justify-content:space-between;align-items:center;padding:6px 0 0}.bal span{font-size:15px;font-weight:500}.bal b{font-size:16px;font-weight:700;color:var(--pri)}
+.list{padding:20px 16px 20px}
+.lh{height:40px;display:flex;align-items:center;justify-content:space-between}.lh h2{font-size:16px;font-weight:700}
+.sort{display:flex;align-items:center;gap:2px;font-size:14px;color:#555}.sort svg{width:18px;height:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin-top:8px;cursor:pointer}
+.card.simple{display:flex;justify-content:space-between;align-items:center;min-height:48px}.card.simple span{font-size:16px}.card.simple b{font-size:15px;font-weight:700}
+.crow{display:flex;justify-content:space-between;align-items:flex-start}
+.crow .d{display:flex;align-items:center;gap:8px;font-size:16px;line-height:22px}
+.bd{height:20px;padding:0 6px;border-radius:6px;font-size:12px;font-weight:700;display:inline-flex;align-items:center}
+.bd.in{background:#e7efff;color:var(--pri)}.bd.out{background:#ffecee;color:#fa4553}
+.crow .a{text-align:right;font-size:15px;font-weight:700;line-height:21px}.crow .a small{display:block;font-size:13px;font-weight:400;color:var(--t2);margin-top:4px;line-height:18px}
+.sub{margin-top:10px;padding-top:10px;border-top:1px solid #ededed;font-size:13px;color:var(--t2);line-height:18px}.sub i{font-style:normal;color:#ccc;margin:0 4px}
+.cta{display:block;width:100%;height:44px;margin-top:16px;border-radius:8px;background:var(--pri);color:#fff;font-size:15px;font-weight:700}
+.home{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#000;z-index:30}
+.toast{position:absolute;left:50%;bottom:50px;transform:translateX(-50%);background:rgba(26,29,35,.92);color:#fff;font-size:13px;padding:11px 16px;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;z-index:40;white-space:nowrap}.toast.show{opacity:1}
+</style></head><body>
+<div class="phone">
+<div class="status"><span>9:41</span><span>●●● 100%</span></div>
+<div class="bar"><button class="back" id="back" aria-label="뒤로가기"><svg viewBox="0 0 24 24"><path d="M20 12H4M10 5l-7 7 7 7"/></svg></button></div>
+<div class="scroll">
+ <div class="top">
+  <div class="head"><div><div class="meta"><span class="bm">채무</span>V1001<i>|</i>구매처<i>|</i>김더존</div><h1>(주)스마트상사</h1></div><button class="btn-info" id="info">거래처정보</button></div>
+  <div class="sum">
+   <div class="sr"><span>전기(월)이월</span><b>120,900,000원</b></div>
+   <div class="sr"><span>당기입고</span><b>49,500,000원</b></div>
+   <div class="sr"><span>당기지급</span><b>42,000,000원</b></div>
+   <div class="hr"></div>
+   <div class="big"><div class="l">미지급 잔액<small>선급금잔액(차감)</small></div><div class="r">128,400,000원<small>0원</small></div></div>
+   <div class="hr"></div>
+   <div class="bal"><span>채무잔액</span><b>128,400,000원</b></div>
+  </div>
+ </div>
+ <div class="list">
+  <div class="lh"><h2>거래내역</h2><button class="sort" id="sort"><span id="sortT">오래된순</span><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button></div>
+  <div class="card simple"><span>전기(월)이월</span><b>120,900,000원</b></div>
+  <div id="tx"></div>
+  <button class="cta" id="cta">미지급 현황</button>
+ </div>
+</div>
+<div class="home"></div><div class="toast"></div></div>
+<script>
+const $=s=>document.querySelector(s),P=new URLSearchParams(location.search);
+function toast(m){const t=$('.toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2200)}
+const TX=[{d:'2026-08-28',k:'입고',c:'in',a:'29,700,000원',b:'채무잔액 150,600,000원',s:'PTX2026082800004<i>|</i>스마트A10 프린터'},{d:'2026-08-31',k:'지급',c:'out',a:'42,000,000원',b:'채무잔액 108,600,000원',s:'등록된 품목 없음'}];
+let asc=true;
+function draw(){const l=asc?TX:[...TX].reverse();$('#sortT').textContent=asc?'오래된순':'최신순';
+ $('#tx').innerHTML=l.map(t=>`<div class="card" data-n="${t.d}"><div class="crow"><div class="d">${t.d}<span class="bd ${t.c}">${t.k}</span></div><div class="a">${t.a}<small>${t.b}</small></div></div><div class="sub">${t.s}</div></div>`).join('');
+ $('#tx').querySelectorAll('.card').forEach(c=>c.onclick=()=>toast(`${c.dataset.n} 원전표 화면은 다음 단계입니다.`))}
+$('#sort').onclick=()=>{asc=!asc;draw()};
+$('#info').onclick=()=>toast('거래처정보 (다음 단계)');
+$('#cta').onclick=()=>toast('미지급 현황 (다음 단계)');
+$('#back').onclick=()=>{if(/\/result\.html/.test(document.referrer))return history.back();const q=new URLSearchParams(P);location.href='result.html?'+q.toString()};
+draw();
+try{if(parent!==window)parent.postMessage({specPage:6},'*')}catch(e){}
+</script><script src="comments.js"></script><script src="fit.js"></script></body></html>
