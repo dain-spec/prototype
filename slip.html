@@ -1,0 +1,68 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>전표 상세</title>
+<style>
+:root{--pri:#105aff;--t1:#333;--t2:#777;--line:#e1e1e1}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;background:#d9dce2;display:flex;justify-content:center;align-items:center;min-height:100vh;color:var(--t1);letter-spacing:-.02em}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.phone{width:375px;height:812px;background:#fff;position:relative;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08);border-radius:32px;display:flex;flex-direction:column}
+.status{height:44px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:0 28px;font-size:15px;font-weight:600}
+.bar{height:48px;flex:none;display:flex;align-items:center;padding:0 16px}.back{width:24px;height:24px}.back svg{width:24px;height:24px;stroke-width:1.8}
+.scroll{flex:1;overflow-y:auto;min-height:0;background:#f0f2f7}.scroll::-webkit-scrollbar{display:none}
+.top{background:#fff;padding:20px 16px 24px}
+.meta{font-size:14px;color:var(--t2);line-height:20px}.meta i{font-style:normal;color:#ccc;margin:0 4px}
+.top h1{font-size:24px;font-weight:700;line-height:34px;margin-top:2px}
+.sum{margin-top:16px;padding:16px;border-radius:12px;background:#f0f4fa}
+.sr{display:flex;justify-content:space-between;align-items:center;min-height:32px;gap:12px;font-size:14px;color:#50596c}.sr>span{flex:none}
+.sr b{font-size:15px;font-weight:500;color:var(--t1);display:inline-flex;align-items:center;gap:6px;min-width:0}
+.sr b em{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tag{height:20px;padding:0 6px;border-radius:4px;background:#e1e1e1;color:#777;font-size:12px;font-weight:400;display:inline-flex;align-items:center;flex:none}
+.hr{height:1px;background:#d9deea;margin:8px 0}
+.sr.s b{font-size:14px;font-weight:400;color:#555}.sr.t{color:var(--t1)}.sr.t span{font-size:15px;font-weight:500}.sr.t b{font-size:16px;font-weight:700}
+.list{padding:20px 16px 24px}
+.lh{height:40px;display:flex;align-items:center;font-size:16px;font-weight:700}.lh b{color:var(--pri);margin-left:4px}
+.card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin-top:8px}
+.crow{display:flex;justify-content:space-between;align-items:center;gap:8px}.crow .n{font-size:16px;line-height:22px}.crow .a{font-size:15px;font-weight:700;flex:none}
+.sub{margin-top:10px;padding-top:10px;border-top:1px solid #ededed;font-size:13px;color:var(--t2);line-height:18px}.sub i{font-style:normal;color:#ccc;margin:0 4px}
+.card.pay .crow .n{font-weight:500}.card.pay .s{font-size:14px;color:var(--t2);line-height:20px}.card.pay .s i{font-style:normal;color:#ccc;margin:0 5px}
+.more{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;height:44px;margin-top:8px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:15px}.more svg{width:18px;height:18px}
+.home{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#000;z-index:30}
+.toast{position:absolute;left:50%;bottom:50px;transform:translateX(-50%);background:rgba(26,29,35,.92);color:#fff;font-size:13px;padding:11px 16px;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;z-index:40;white-space:nowrap}.toast.show{opacity:1}
+</style></head><body>
+<div class="phone">
+<div class="status"><span>9:41</span><span>●●● 100%</span></div>
+<div class="bar"><button class="back" id="back" aria-label="뒤로가기"><svg viewBox="0 0 24 24"><path d="M20 12H4M10 5l-7 7 7 7"/></svg></button></div>
+<div class="scroll">
+ <div class="top">
+  <div class="meta" id="meta"></div><h1 id="no"></h1>
+  <div class="sum">
+   <div class="sr"><span>일자</span><b>2026-09-01</b></div>
+   <div class="sr"><span>문서번호</span><b><em id="no2"></em><span class="tag" id="kind"></span></b></div>
+   <div class="sr"><span>거래처</span><b id="vendor"></b></div>
+   <div class="sr"><span>부서/사원</span><b><em>본부본부개발부서&gt;개발개발팀.../김더존</em></b></div>
+   <div class="hr"></div>
+   <div class="sr s"><span>공급가액</span><b id="supply"></b></div>
+   <div class="sr s"><span>부가세</span><b id="vat"></b></div>
+   <div class="sr t"><span>합계금액</span><b id="total"></b></div>
+  </div>
+ </div>
+ <div class="list"><div class="lh"><span id="lt"></span><b id="lc"></b></div><div id="items"></div></div>
+</div>
+<div class="home"></div><div class="toast"></div></div>
+<script>
+const $=s=>document.querySelector(s),P=new URLSearchParams(location.search);
+function toast(m){const t=$('.toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2200)}
+const D={
+ in:{kind:'구매입고',no:'PTX2026090100001',vendor:'(주)스마트상사',supply:'18,000,000원',vat:'1,800,000원',total:'19,800,000원',lt:'품목',lc:7,
+  items:[['스마트A10 프린터 SPA10-BK','9,900,000원','수량 30 X 단가 300,000<i>|</i>규격 SPA10-BK<i>|</i>100 본사 창고'],['토너 카트리지 TN-450','2,640,000원','수량 30 X 단가 60,000<i>|</i>규격 100X150<i>|</i>100 본사 창고'],['라벨지 100X150','2,200,000원','수량 30 X 단가 60,000<i>|</i>규격 A형<i>|</i>200 경기물류센터'],['포장박스 A형','1,980,000원','수량 150 X 단가 60,000<i>|</i>규격 A형<i>|</i>200 경기물류센터']],more:'2건 더보기'},
+ pay:{kind:'지급',no:'PAY2026083100007',vendor:'대한스마트포장(주)',supply:'42,000,000원',vat:'0원',total:'42,000,000원',lt:'결제',lc:1,pay:[['계좌이체','결제수단<i>|</i>지급','42,000,000원']]}};
+const C=D[P.get('k')==='pay'?'pay':'in'];
+document.title='전표 상세 - '+C.kind;
+$('#meta').innerHTML=`${C.kind}<i>|</i>2026-09-01<i>|</i>${C.vendor}`;$('#no').textContent=C.no;$('#no2').textContent=C.no;$('#kind').textContent=C.kind;
+$('#vendor').textContent=C.vendor;$('#supply').textContent=C.supply;$('#vat').textContent=C.vat;$('#total').textContent=C.total;$('#lt').textContent=C.lt;$('#lc').textContent=C.lc;
+$('#items').innerHTML=C.pay?C.pay.map(p=>`<div class="card pay"><div class="crow"><div><div class="n">${p[0]}</div><div class="s">${p[1]}</div></div><div class="a">${p[2]}</div></div></div>`).join(''):
+ C.items.map(i=>`<div class="card"><div class="crow"><span class="n">${i[0]}</span><span class="a">${i[1]}</span></div><div class="sub">${i[2]}</div></div>`).join('')+`<button class="more" id="more">${C.more}<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>`;
+if($('#more'))$('#more').onclick=()=>toast('더보기 (다음 단계)');
+$('#back').onclick=()=>{if(/\/result\.html/.test(document.referrer))return history.back();const q=new URLSearchParams(P);q.delete('k');location.href='result.html?'+q.toString()};
+try{if(parent!==window)parent.postMessage({specPage:7},'*')}catch(e){}
+</script><script src="comments.js"></script><script src="fit.js"></script></body></html>
