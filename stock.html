@@ -47,7 +47,8 @@ const $=s=>document.querySelector(s),P=new URLSearchParams(location.search);
 function toast(m){const t=$('.toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2200)}
 if(P.get('n'))$('#name').textContent=P.get('n');
 const goBack=()=>{if(/\/item\.html/.test(document.referrer))return history.back();location.href='item.html?'+P.toString()};
-$('#back').onclick=$('#prev').onclick=goBack;
+$('#prev').onclick=goBack;
+$('#back').onclick=()=>{const q=new URLSearchParams(P);q.delete('n');location.href='result.html?'+q.toString()};
 $('#wh').onclick=()=>toast('창고별 재고현황 화면은 준비 중입니다.');
 try{if(parent!==window)parent.postMessage({specPage:5},'*')}catch(e){}
 </script><script src="comments.js"></script><script src="fit.js"></script></body></html>
