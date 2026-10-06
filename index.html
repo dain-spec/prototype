@@ -16,7 +16,7 @@ body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;backg
 .stage{flex:1;position:relative;min-width:0;height:calc(100% - 40px)}
 .note{position:fixed;left:480px;right:0;bottom:0;height:40px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#5c6370;letter-spacing:-.02em;padding:0 16px;text-align:center}
 #fit{position:absolute;left:50%;top:24px;display:flex;align-items:flex-start;gap:24px;transform-origin:top center}
-.col{width:400px}.col h2{height:44px;font-size:15px;font-weight:700;color:#333;text-align:center;line-height:20px}
+.col{width:400px}.col[hidden]{display:none}.col h2{height:44px;font-size:15px;font-weight:700;color:#333;text-align:center;line-height:20px}
 .col h2 span{display:block;font-size:12px;font-weight:500;color:#5c6370;margin-top:2px}
 iframe{display:block;border:0;width:400px;height:850px;background:transparent}
 .reset{position:fixed;right:16px;top:12px;font-size:12px;color:#5c6370;background:#fff;border:0;padding:6px 10px;border-radius:8px;cursor:pointer;font-family:inherit;z-index:2}
@@ -28,7 +28,7 @@ iframe{display:block;border:0;width:400px;height:850px;background:transparent}
 <div class="lb" id="lb"><img id="limg" alt=""></div>
 <main class="stage"><div id="fit">
  <div class="col"><iframe src="A.html?nospec" title="A안"></iframe></div>
- <div class="col"><iframe src="B.html?nospec" title="B안"></iframe></div>
+ <div class="col" hidden><iframe src="B.html?nospec" title="B안"></iframe></div>
 </div></main>
 <footer class="note">*본 프로토타입은 참고용으로 제작된 것으로 최종 디자인 산출물이 아니며, 최종 산출물은 피그마 파일을 확인해 주세요.</footer>
 <script>
