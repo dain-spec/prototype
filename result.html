@@ -33,6 +33,7 @@ mark{background:none;color:var(--pri)}
 .state{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:10px;border:1px solid var(--org);color:var(--org);font-size:12px;font-weight:500;margin-top:4px}.state.r{border-color:var(--red);color:var(--red)}
 .home{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#000;z-index:30}
 .toast{position:absolute;left:50%;bottom:60px;transform:translateX(-50%);background:rgba(26,29,35,.92);color:#fff;font-size:13px;padding:11px 16px;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;z-index:40;white-space:nowrap}.toast.show{opacity:1}
+.chev{width:14px;height:14px;color:#777;flex:none;margin-left:4px}
 </style></head><body>
 <div class="phone">
 <div class="status"><span>9:41</span><span>●●● 100%</span></div>
@@ -58,7 +59,7 @@ $('#back').onclick=()=>prev()?history.back():back();$('#clear').onclick=$('#q').
 const BD={구매:['#e7efff','#105aff'],거래:['#ece7ff','#3010ff'],품목:['#ddeef3','#0190a8'],지급:['#ffecee','#fa4553'],판매:['#fff2dc','#ffa000'],수금:['#e9f9f1','#27c36f']};
 const bd=t=>`<span class="bd" style="background:${BD[t][0]};color:${BD[t][1]}">${t}</span>`;
 const amt=(a,s)=>a?`<div class="amt">${a}${s?`<span class="st">${s}</span>`:''}</div>`:'<div class="amt hid">금액 비공개</div>';
-const it=(b,title,sub,a,s,tag,tagCls)=>`<div class="it" data-b="${b}" data-t="${title.replace(/<[^>]+>/g,'').replace(/"/g,'')}"><div class="l"><div class="t">${bd(b)}<span class="n">${hl(title)}</span></div><div class="sub">${hl(sub)}</div>${tag?`<span class="state ${tagCls||''}">${tag}</span>`:''}</div>${amt(a,s)}</div>`;
+const it=(b,title,sub,a,s,tag,tagCls)=>`<div class="it" data-b="${b}" data-t="${title.replace(/<[^>]+>/g,'').replace(/"/g,'')}"><div class="l"><div class="t">${bd(b)}<span class="n">${hl(title)}</span></div><div class="sub">${hl(sub)}</div>${tag?`<span class="state ${tagCls||''}">${tag}</span>`:''}</div>${amt(a,s)}<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div>`;
 const D=[
 ['거래처·구매처',5,false,[
  ['구매','(주){q}상사','V1001<i>|</i>구매처<i>|</i>김더존','1.28억','미지급'],
@@ -73,7 +74,7 @@ const D=[
  ['지급','PAY2026083100007','지급<i>|</i>2026-09-01<i>|</i>대한{q}포장(주)','1,980만'],
  ['판매','PAY2026083100007','판매출고<i>|</i>2026-09-01<i>|</i>대한{q}포장(주)',null,null,'타 담당·상세 제한'],
  ['수금','RCV2026083100007','수금<i>|</i>2026-09-01<i>|</i>대한{q}포장(주)',null,null,'타 담당·상세 제한']]]];
-const total=5+1+99,cats=[['전체',total],['거래처·구매처',5],['품목',1],['전표',99]];
+const total=999,cats=[['전체',total],['거래처·구매처',5],['품목',1],['전표',99]];
 let cur='전체';
 function draw(){
  $('#tabs').innerHTML=cats.map(([n,c])=>`<button class="tab ${cur===n?'on':''}" data-n="${n}">${n} ${c}</button>`).join('');

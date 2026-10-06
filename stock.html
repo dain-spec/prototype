@@ -26,7 +26,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
 </style></head><body>
 <div class="phone">
 <div class="status"><span>9:41</span><span>●●● 100%</span></div>
-<div class="bar"><button class="back" id="back" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></button><h2>재고자산명세서</h2></div>
+<div class="bar"><button class="back" id="back" aria-label="뒤로가기"><svg viewBox="0 0 24 24"><path d="M20 12H4M10 5l-7 7 7 7"/></svg></button><h2>재고자산명세서</h2></div>
 <div class="body">
  <div class="title"><h1 id="name">스마트A10 프린터</h1><span class="badge">안전재고 미달</span></div>
  <dl class="info">
@@ -40,15 +40,12 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
  </div>
  <div class="warn"><h3><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6.5v7M12 16.5v1.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>안전재고 미달</h3><p>발주 등록은 SmartA10 웹에서 진행합니다.</p></div>
 </div>
-<div class="btns"><button class="b1" id="prev">이전</button><button class="b2" id="wh">창고별 재고</button></div>
 <div class="home"></div><div class="toast"></div></div>
 <script>
 const $=s=>document.querySelector(s),P=new URLSearchParams(location.search);
 function toast(m){const t=$('.toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2200)}
 if(P.get('n'))$('#name').textContent=P.get('n');
 const goBack=()=>{if(/\/item\.html/.test(document.referrer))return history.back();location.href='item.html?'+P.toString()};
-$('#prev').onclick=goBack;
-$('#back').onclick=()=>{const q=new URLSearchParams(P);q.delete('n');location.href='result.html?'+q.toString()};
-$('#wh').onclick=()=>toast('창고별 재고현황 화면은 준비 중입니다.');
+$('#back').onclick=goBack;
 try{if(parent!==window)parent.postMessage({specPage:5},'*')}catch(e){}
 </script><script src="comments.js"></script><script src="fit.js"></script></body></html>
