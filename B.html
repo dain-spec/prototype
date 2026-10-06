@@ -60,9 +60,6 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
 .toast{position:absolute;left:50%;bottom:60px;transform:translateX(-50%);background:rgba(26,29,35,.92);color:#fff;font-size:13px;padding:11px 16px;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;z-index:40;white-space:nowrap}.toast.show{opacity:1}
 .cancel{font-size:15px;color:var(--t2);height:40px;padding:0 2px}.panel{margin:8px 16px 0;padding:16px 14px 8px;border:1px solid var(--line);border-radius:12px}.panel .hr{display:none}.panel .range{margin-top:10px}.field.focus{background:#fff;box-shadow:inset 0 0 0 1.5px var(--pri)}
 .cal .d{height:36px}
-.cm-pin{position:absolute;right:16px;top:20px;width:24px;height:24px;border-radius:12px 12px 12px 2px;background:#ff7a1a;color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.25);z-index:5}
-.cm-pop{position:absolute;right:16px;top:50px;width:max-content;max-width:200px;word-break:keep-all;overflow-wrap:break-word;background:#fff;border:1px solid #ff7a1a;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.2);padding:12px 14px;z-index:6;font-size:13px;line-height:1.45;color:#333}
-.cm-pop[hidden]{display:none}
 .panel{margin:0!important;padding:16px 16px 20px!important;border:0!important;border-radius:0!important;margin-top:0}.panel .hr{display:block!important;margin:16px -16px 0}.panel .range{margin-top:8px!important}
 #active{overflow:hidden;flex:1}.dimarea{flex:1;background:rgba(0,0,0,.4)}.field.focus{background:var(--bg)!important;box-shadow:none!important}.bar{padding-bottom:12px}#active .panel{margin-top:8px!important}
 .btns{margin-top:12px}.b2{width:100%;height:44px}
@@ -79,9 +76,7 @@ body{gap:28px}.spec{width:320px;flex:none;align-self:center;padding:16px;backgro
 <div class="screen" id="idle">
  <div class="sec"><div class="sec-h"><span style="color:var(--t1)">최근 검색</span><button id="clearAll">전체삭제</button></div><ul class="recent" id="recent"></ul></div>
  <div class="div"></div>
- <div class="sec" style="padding-top:20px;position:relative"><button class="cm-pin" id="cmPin" title="코멘트">1</button>
-<div class="cm-pop" id="cmPop" hidden>추천 검색어 몇 개까지 제공하나요?</div>
-<div class="rec-h"><b>추천 검색어</b><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.3L21 10l-6.8 1.7L12 18l-2.2-6.3L3 10l6.8-1.7z"/></svg></div><div class="rchips" id="rec"></div></div>
+ <div class="sec" style="padding-top:20px;position:relative"><div class="rec-h"><b>추천 검색어</b><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.3L21 10l-6.8 1.7L12 18l-2.2-6.3L3 10l6.8-1.7z"/></svg></div><div class="rchips" id="rec"></div></div>
  <div class="info"><h4><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>검색 안내</h4><ul>
   <li>조회기간을 먼저 선택한 후 검색해 주세요. 기간은 전표 일자를 기준으로 적용되며, 거래처·품목은 기간과 무관하게 조회됩니다.</li>
   <li>거래처·구매처는 거래처명·코드·사업자등록번호로 검색할 수 있습니다.</li>
@@ -146,5 +141,4 @@ drawRecent();syncBar();
 
 
 
-$('#cmPin').onclick=e=>{e.stopPropagation();const p=$('#cmPop');p.hidden=!p.hidden};document.addEventListener('click',e=>{if(!e.target.closest('#cmPop'))$('#cmPop').hidden=true});
 </script><script src="comments.js"></script><script src="fit.js"></script></body></html>

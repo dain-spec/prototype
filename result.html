@@ -33,8 +33,6 @@ mark{background:none;color:var(--pri)}
 .state{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:10px;border:1px solid var(--org);color:var(--org);font-size:12px;font-weight:500;margin-top:4px}.state.r{border-color:var(--red);color:var(--red)}
 .home{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#000;z-index:30}
 .toast{position:absolute;left:50%;bottom:60px;transform:translateX(-50%);background:rgba(26,29,35,.92);color:#fff;font-size:13px;padding:11px 16px;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;z-index:40;white-space:nowrap}.toast.show{opacity:1}
-.cm-pin{position:absolute;right:40px;top:12px;width:24px;height:24px;border-radius:12px 12px 12px 2px;background:#ff7a1a;color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.25);z-index:5}
-.cm-pop{position:absolute;right:16px;top:44px;width:max-content;max-width:200px;word-break:keep-all;overflow-wrap:break-word;background:#fff;border:1px solid #ff7a1a;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.2);padding:12px 14px;z-index:6;font-size:13px;line-height:1.45;color:#333}
 </style></head><body>
 <div class="phone">
 <div class="status"><span>9:41</span><span>●●● 100%</span></div>
@@ -81,10 +79,7 @@ function draw(){
  $('#tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{cur=b.dataset.n;draw();$('#body').scrollTop=0});
  const list=D.filter(d=>cur==='전체'||d[0]===cur);const cnt=cats.find(c=>c[0]===cur)[1];
  $('#body').innerHTML=`<div class="total">검색결과 총 <b>${cnt}</b>건</div><div class="note">메뉴의 조회 조건(조회범위·거래처)과 무관하게, 권한 범위 전체를 대상으로 검색한 결과입니다. 단, 전표는 조회기간이 올해(${yr}-01-01 ~ ${yr}-12-31)인 것만 표시됩니다.</div>`+
- list.map(([n,c,arrow,rows])=>`<div class="card"><div class="card-h"><span>${n}<b>${c}</b></span>${arrow?'<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg><button class="cm-pin" id="cmPin">1</button><div class="cm-pop" id="cmPop" hidden>전표 6개로 이상부터 서브페이지 이동?</div>':''}</div><div style="padding:6px 0">${rows.map(r=>it(...r)).join('')}</div></div>`).join('');
+ list.map(([n,c,arrow,rows])=>`<div class="card"><div class="card-h"><span>${n}<b>${c}</b></span>${arrow?'<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>':''}</div><div style="padding:6px 0">${rows.map(r=>it(...r)).join('')}</div></div>`).join('');
  $('#body').querySelectorAll('.it').forEach(e=>e.onclick=()=>toast(`"${e.dataset.t}" 상세 화면으로 이동 (다음 단계)`))}
 draw();
-function bindCm(){const b=$('#cmPin');if(!b)return;b.onclick=e=>{e.stopPropagation();const p=$('#cmPop');p.hidden=!p.hidden}}
-const _d=draw;draw=function(){_d();bindCm()};bindCm();
-document.addEventListener('click',e=>{const p=$('#cmPop');if(p&&!e.target.closest('#cmPop'))p.hidden=true});
 </script><script src="comments.js"></script><script src="fit.js"></script></body></html>
