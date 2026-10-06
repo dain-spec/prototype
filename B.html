@@ -66,7 +66,9 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
 .panel{margin:0!important;padding:16px 16px 20px!important;border:0!important;border-radius:0!important;margin-top:0}.panel .hr{display:block!important;margin:16px -16px 0}.panel .range{margin-top:8px!important}
 #active{overflow:hidden;flex:1}.dimarea{flex:1;background:rgba(0,0,0,.4)}.field.focus{background:var(--bg)!important;box-shadow:none!important}.bar{padding-bottom:12px}#active .panel{margin-top:8px!important}
 .btns{margin-top:12px}.b2{width:100%;height:44px}
+body{gap:28px}.spec{width:280px;flex:none;align-self:center}.spec img{display:block;width:280px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.18)}.spec figcaption{font-size:13px;font-weight:700;color:#555;margin:0 0 8px 4px}
 </style></head><body>
+<figure class="spec"><figcaption>설계서</figcaption><img src="spec.png" alt="통합검색 설계서"></figure>
 <div class="phone">
 <div class="status"><span>9:41</span><span>●●● 100%</span></div>
 <div class="bar">
@@ -78,7 +80,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
  <div class="sec"><div class="sec-h"><span style="color:var(--t1)">최근 검색</span><button id="clearAll">전체삭제</button></div><ul class="recent" id="recent"></ul></div>
  <div class="div"></div>
  <div class="sec" style="padding-top:20px;position:relative"><button class="cm-pin" id="cmPin" title="코멘트">1</button>
-<div class="cm-pop" id="cmPop">추천 검색어 몇 개까지 제공하나요?</div>
+<div class="cm-pop" id="cmPop" hidden>추천 검색어 몇 개까지 제공하나요?</div>
 <div class="rec-h"><b>추천 검색어</b><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.3L21 10l-6.8 1.7L12 18l-2.2-6.3L3 10l6.8-1.7z"/></svg></div><div class="rchips" id="rec"></div></div>
  <div class="info"><h4><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>검색 안내</h4><ul>
   <li>조회기간을 먼저 선택한 후 검색해 주세요. 기간은 전표 일자를 기준으로 적용되며, 거래처·품목은 기간과 무관하게 조회됩니다.</li>
@@ -145,4 +147,4 @@ drawRecent();syncBar();
 
 
 $('#cmPin').onclick=e=>{e.stopPropagation();const p=$('#cmPop');p.hidden=!p.hidden};document.addEventListener('click',e=>{if(!e.target.closest('#cmPop'))$('#cmPop').hidden=true});
-</script></body></html>
+</script><script src="fit.js"></script></body></html>

@@ -1,12 +1,12 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>통합검색 프로토타입</title>
 <style>
 *{box-sizing:border-box;margin:0}
-body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;background:#d9dce2;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px 0 0}
+body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;background:#d9dce2;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:12px 0 0}
 .tabs{display:flex;gap:4px;padding:4px;background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
 .tabs button{border:0;background:none;font:inherit;font-size:14px;font-weight:600;color:#5c6370;padding:10px 18px;border-radius:10px;cursor:pointer}
 .tabs button.on{background:#2f6bff;color:#fff}
 .desc{font-size:13px;color:#5c6370;margin:10px 0 0;min-height:18px}
-iframe{border:0;width:460px;flex:1;min-height:880px;background:transparent}
+iframe{border:0;width:100%;flex:1;min-height:0;background:transparent}
 .reset{margin-top:6px;font-size:12px;color:#5c6370;background:none;border:0;cursor:pointer;text-decoration:underline;font-family:inherit}
 </style></head><body>
 <div class="tabs"><button data-f="A.html" class="on">A안</button><button data-f="B.html">B안</button></div>
