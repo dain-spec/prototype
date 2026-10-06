@@ -1,0 +1,144 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>통합검색 A안</title>
+<style>
+:root{--pri:#105aff;--t1:#333;--t2:#777;--line:#e1e1e1;--bg:#f5f6fa;--chip:#eff4ff;--red:#fa4553}
+[hidden]{display:none!important}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;background:#d9dce2;display:flex;justify-content:center;align-items:center;min-height:100vh;color:var(--t1);letter-spacing:-.02em}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}input{font:inherit;color:inherit;border:0;outline:0;background:none}
+svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.phone{width:375px;height:812px;background:#fff;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25);border-radius:32px;display:flex;flex-direction:column}
+.status{height:44px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:0 28px;font-size:15px;font-weight:600}
+.bar{display:flex;align-items:center;gap:10px;padding:4px 16px 8px;flex:none}
+.back{width:24px;height:24px;flex:none}.back svg{width:24px;height:24px;stroke-width:1.8}
+.field{flex:1;height:44px;border-radius:22px;background:var(--bg);display:flex;align-items:center;gap:8px;padding:0 14px 0 14px;color:#aaa}
+.field>svg{width:18px;height:18px;flex:none;stroke:var(--t2)}
+.field input{flex:1;min-width:0;font-size:15px;color:var(--t1)}.field input::placeholder{color:#aab0bd}
+.xbtn{width:20px;height:20px;border-radius:10px;background:#bbb;display:grid;place-items:center;flex:none}.xbtn svg{width:11px;height:11px;stroke:#fff;stroke-width:2}
+.fbtn{width:40px;height:40px;border-radius:20px;border:1px solid var(--line);display:grid;place-items:center;flex:none;background:#fff}.fbtn svg{width:20px;height:20px}
+.fbtn.on{border-color:var(--pri);color:var(--pri)}
+.pchip{margin:4px 16px 0;display:inline-flex;align-self:flex-start;align-items:center;gap:4px;height:30px;padding:0 8px 0 10px;border-radius:4px;background:#ededed;font-size:14px;font-weight:500}
+.pchip svg{width:12px;height:12px;color:var(--t2)}
+.screen{flex:1;overflow-y:auto;min-height:0;display:flex;flex-direction:column}.screen::-webkit-scrollbar{display:none}
+.sec{padding:18px 16px 0}.sec-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:13px;color:var(--t2)}
+.recent{list-style:none}.recent li{height:48px;display:flex;align-items:center;gap:10px;font-size:15px;cursor:pointer}
+.recent .ic{width:24px;height:24px;border-radius:12px;background:var(--bg);display:grid;place-items:center;flex:none}.recent .ic svg{width:14px;height:14px;stroke:var(--t2)}
+.recent span{flex:1}.recent .del{width:24px;height:24px;color:#888;display:grid;place-items:center}.recent .del svg{width:18px;height:18px}
+.empty{color:#aaa;font-size:14px;text-align:center;padding:24px 0}
+.div{height:8px;background:var(--bg);margin-top:12px;flex:none}
+.rec-h{font-size:14px;font-weight:700;display:flex;align-items:center;gap:4px;margin-bottom:12px}
+.rec-h b{background:linear-gradient(90deg,#a948d6,#3c86e7);-webkit-background-clip:text;color:transparent}.rec-h svg{width:14px;height:14px;stroke:none;fill:#3c86e7}
+.rchips{display:flex;gap:8px;flex-wrap:wrap}.rchip{height:36px;padding:0 14px;border-radius:18px;background:var(--chip);display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500}.rchip svg{width:16px;height:16px;stroke:var(--t1)}
+.info{margin:20px 16px 0;padding:16px;border-radius:12px;background:var(--bg);font-size:13px;color:var(--t2);line-height:1.4}
+.info h4{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:700;margin-bottom:6px}.info h4 svg{width:13px;height:13px}
+.info li{list-style:none;padding-left:10px;text-indent:-10px;margin-bottom:6px}.info li:before{content:"• ";}
+.info.blue{background:var(--chip);border:1px solid rgba(0,0,0,.06);margin-bottom:24px;font-size:13px}
+.dim{position:absolute;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.25s;z-index:10}.dim.show{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:16px 16px 0 0;transform:translateY(100%);transition:.3s;z-index:11;padding:20px 16px 20px;max-height:92%}.sheet.show{transform:none}
+.sh-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}.sh-h h2{font-size:16px;font-weight:700}.sh-h span{font-size:12px;color:var(--t2)}
+.lbl{font-size:13px;color:var(--t2);margin-bottom:6px}
+.presets{display:flex;gap:8px}.presets button{flex:1;height:44px;border-radius:8px;border:1px solid var(--line);font-size:14px;color:var(--t2)}
+.presets button.sel{border-color:var(--pri);color:var(--pri);font-weight:600}
+.presets button.direct{background:var(--bg);border-color:var(--bg);font-weight:700;color:var(--t1)}
+.range{margin-top:12px;height:44px;border:1px solid var(--line);border-radius:8px;display:flex;align-items:center;justify-content:space-around;font-size:15px}
+.range div{display:flex;align-items:center;gap:20px}.range svg{width:16px;height:16px;stroke:var(--t2)}.range i{font-style:normal;color:var(--t2)}
+.range .on{color:var(--pri);font-weight:600}
+.hr{height:1px;background:var(--line);margin:16px -16px 0}
+.cal-h{display:flex;align-items:center;justify-content:space-between;margin:14px 0 6px;position:relative}
+.cal-h div{display:flex;align-items:center;gap:14px;margin:0 auto;font-size:15px;font-weight:700}.cal-h button{width:20px;height:20px;color:var(--t1)}.cal-h button svg{width:16px;height:16px}
+.today{position:absolute;right:0;height:26px;padding:0 9px;border:1px solid var(--line);border-radius:4px;font-size:12px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);row-gap:2px}
+.cal .w{height:28px;display:grid;place-items:center;font-size:11px;color:var(--t2)}
+.cal .d{height:40px;display:grid;place-items:center;font-size:15px;position:relative;cursor:pointer}
+.cal .d span{width:30px;height:30px;border-radius:15px;display:grid;place-items:center;position:relative;z-index:1}
+.cal .d.out{color:#bbb}.cal .d.sun{color:var(--red)}.cal .d.out.sun{color:#fbb}
+.cal .d.in:before{content:"";position:absolute;inset:5px 0;background:var(--chip)}
+.cal .d.s:before{left:50%}.cal .d.e:before{right:50%}.cal .d.s.e:before{display:none}
+.cal .d.s span,.cal .d.e span{background:var(--pri);color:#fff;font-weight:600}
+.btns{display:flex;gap:8px;margin-top:14px}.btns button{height:44px;border-radius:8px;font-size:15px;font-weight:600}
+.b1{flex:1;border:1px solid var(--line)}.b2{flex:1;background:var(--pri);color:#fff}
+.home{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#000;z-index:30}
+.toast{position:absolute;left:50%;bottom:60px;transform:translateX(-50%);background:rgba(26,29,35,.92);color:#fff;font-size:13px;padding:11px 16px;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;z-index:40;white-space:nowrap}.toast.show{opacity:1}
+.cm-pin{position:absolute;right:16px;top:20px;width:24px;height:24px;border-radius:12px 12px 12px 2px;background:#ff7a1a;color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.25);z-index:5}
+.cm-pop{position:absolute;right:16px;top:50px;width:max-content;max-width:200px;word-break:keep-all;overflow-wrap:break-word;background:#fff;border:1px solid #ff7a1a;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.2);padding:12px 14px;z-index:6;font-size:13px;line-height:1.45;color:#333}
+.cm-pop[hidden]{display:none}
+</style></head><body>
+<div class="phone">
+<div class="status"><span>9:41</span><span>●●● 100%</span></div>
+<div class="bar">
+ <button class="back" onclick="toast('이전 화면으로')"><svg viewBox="0 0 24 24"><path d="M20 12H4M10 5l-7 7 7 7"/></svg></button>
+ <div class="field"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" placeholder="거래처, 품목, 전표번호를 검색" enterkeyhint="search" autocomplete="off"><button class="xbtn" id="clear" hidden><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+ <button class="fbtn" id="filter" aria-label="상세검색 필터"><svg viewBox="0 0 24 24"><path d="M4 8h9M17 8h3M4 16h3M11 16h9"/><circle cx="15" cy="8" r="2"/><circle cx="9" cy="16" r="2"/></svg></button>
+</div>
+<div class="pchip" id="pchip" hidden><span id="ptxt"></span><button id="px"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke-width="2"/></svg></button></div>
+<div class="screen">
+ <div class="sec"><div class="sec-h"><span style="color:var(--t1)">최근 검색</span><button id="clearAll">전체삭제</button></div><ul class="recent" id="recent"></ul></div>
+ <div class="div"></div>
+ <div class="sec" style="padding-top:20px;position:relative"><button class="cm-pin" id="cmPin" title="코멘트">1</button>
+<div class="cm-pop" id="cmPop">추천 검색어 몇 개까지 제공하나요?</div>
+<div class="rec-h"><b>추천 검색어</b><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.3L21 10l-6.8 1.7L12 18l-2.2-6.3L3 10l6.8-1.7z"/></svg></div><div class="rchips" id="rec"></div></div>
+ <div class="info"><h4><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>검색 안내</h4><ul>
+  <li>조회기간을 먼저 선택한 후 검색해 주세요. 기간은 전표 일자를 기준으로 적용되며, 거래처·품목은 기간과 무관하게 조회됩니다.</li>
+  <li>거래처·구매처는 거래처명·코드·사업자등록번호로 검색할 수 있습니다.</li>
+  <li>품목은 품목명·코드·규격으로 검색할 수 있습니다.</li>
+  <li>전표는 전표번호의 일부만 입력하셔도 조회됩니다.<br>(예: 0100001)</li>
+  <li>검색어는 2자 이상 입력해야 결과가 표시됩니다.</li></ul></div>
+ <div class="info blue" style="margin-top:12px">통합 검색은 메뉴의 조회 조건(조회범위·거래처)과 무관하게, 권한 범위 전체를 대상으로 검색한 결과입니다. 기간만이 화면의 조회기간을 따릅니다. 담당이 아닌 건도 검색되지만 상세 조회는 권한에 따라 제한됩니다.</div>
+</div>
+<div class="dim" id="dim"></div>
+<div class="sheet" id="sheet">
+ <div class="sh-h"><h2>조회기간 설정</h2><span id="sub"></span></div>
+ <div class="lbl">기간</div>
+ <div class="presets" id="presets"></div>
+ <div class="range"><div><b id="fromT" style="font-weight:400"></b><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></div><i>~</i><div><b id="toT" style="font-weight:400"></b><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></div></div>
+ <div class="hr"></div>
+ <div class="cal-h"><div><button id="py"><svg viewBox="0 0 24 24"><path d="M12 6l-6 6 6 6M19 6l-6 6 6 6"/></svg></button><button id="pm"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><span id="ym"></span><button id="nm"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button><button id="ny"><svg viewBox="0 0 24 24"><path d="M5 6l6 6-6 6M12 6l6 6-6 6"/></svg></button></div><button class="today" id="today">오늘</button></div>
+ <div class="cal" id="cal"></div>
+ <div class="btns"><button class="b1" id="cancel">취소</button><button class="b2" id="apply">적용</button></div>
+</div>
+<div class="home"></div><div class="toast"></div></div>
+<script>
+const $=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0'),f=d=>`${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())}`,key=d=>d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
+const D=(y,m,d)=>new Date(y,m,d);const now=new Date(),T=D(now.getFullYear(),now.getMonth(),now.getDate());
+function toast(m){const t=$('.toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2000)}
+// recent
+const store={get:()=>{try{return JSON.parse(sessionStorage.getItem('recentA2')||'["스마트A10 프린터","미지급 상위 구매처","오늘 입고 전표","토너 구매 수량"]')}catch(e){return[]}},set:v=>{try{sessionStorage.setItem('recentA2',JSON.stringify(v))}catch(e){}}};
+const IC={clock:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',x:'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>',s:'<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>'};
+function drawRecent(){const l=store.get();$('#recent').innerHTML=l.length?l.map((k,i)=>`<li data-k="${k}"><div class="ic">${IC.clock}</div><span>${k}</span><button class="del" data-i="${i}">${IC.x}</button></li>`).join(''):'<div class="empty">최근 검색어가 없습니다</div>';
+ $('#recent').querySelectorAll('li').forEach(li=>li.onclick=e=>{const b=e.target.closest('.del');if(b){const l=store.get();l.splice(+b.dataset.i,1);store.set(l);drawRecent();return}go(li.dataset.k)})}
+$('#clearAll').onclick=()=>{store.set([]);drawRecent()};
+$('#rec').innerHTML=['스마트A10 프린터','미지급 상위 구매처'].map(k=>`<button class="rchip" data-k="${k}">${IC.s}${k}</button>`).join('');
+$('#rec').querySelectorAll('button').forEach(b=>b.onclick=()=>go(b.dataset.k));
+// period
+let period=null;
+function syncBar(){$('#clear').hidden=!$('#q').value;$('#pchip').hidden=!period;$('#filter').classList.toggle('on',!!period);if(period)$('#ptxt').textContent=`${f(period.from)}~${f(period.to)}`}
+$('#q').oninput=syncBar;$('#q').onkeydown=e=>{if(e.key==='Enter')go($('#q').value)};
+$('#clear').onclick=()=>{$('#q').value='';syncBar();$('#q').focus()};$('#px').onclick=()=>{period=null;syncBar()};
+function go(k){k=k.trim();if(k.length<2)return toast('검색어를 2자 이상 입력해주세요');if(!period)return toast('조회기간을 먼저 설정해주세요'),openSheet();
+ store.set([k,...store.get().filter(x=>x!==k)].slice(0,10));$('#q').value=k;syncBar();drawRecent();location.href='result.html?v=A&q='+encodeURIComponent(k)+(period?'&from='+f(period.from)+'&to='+f(period.to):'')}
+// sheet
+let from,to,view,preset;
+const weekStart=()=>{const d=new Date(T);d.setDate(d.getDate()-((d.getDay()+6)%7));return d};
+const P={'이번주':()=>[weekStart(),D(T.getFullYear(),T.getMonth(),weekStart().getDate()+6)],'이번달':()=>[D(T.getFullYear(),T.getMonth(),1),D(T.getFullYear(),T.getMonth()+1,0)],'올해':()=>[D(T.getFullYear(),0,1),D(T.getFullYear(),11,31)]};
+function openSheet(){const p=period||{from:T,to:T,preset:'직접입력'};from=p.from;to=p.to;preset=p.preset||'직접입력';view=D(from.getFullYear(),from.getMonth(),1);draw();$('#dim').classList.add('show');$('#sheet').classList.add('show')}
+function closeSheet(){$('#dim').classList.remove('show');$('#sheet').classList.remove('show')}
+$('#filter').onclick=openSheet;$('#dim').onclick=$('#cancel').onclick=closeSheet;
+function draw(){
+ $('#presets').innerHTML=['이번주','이번달','올해'].map(n=>`<button class="${preset===n?'sel':''}" data-n="${n}">${n}</button>`).join('')+`<button class="direct" style="${preset==='직접입력'?'':'font-weight:500;color:var(--t2)'}" data-n="직접입력">직접입력</button>`;
+ $('#presets').querySelectorAll('button').forEach(b=>b.onclick=()=>{const n=b.dataset.n;preset=n;if(P[n]){[from,to]=P[n]();view=D(from.getFullYear(),from.getMonth(),1)}draw()});
+ $('#fromT').textContent=f(from);$('#toT').textContent=to?f(to):'';$('#fromT').className=to?'':'on';$('#toT').className=to?'':'on';$('#sub').textContent=to?`${f(from)} ~ ${f(to)}`:'';
+ $('#ym').textContent=`${view.getFullYear()}년 ${view.getMonth()+1}월`;
+ const first=D(view.getFullYear(),view.getMonth(),1);let h='<div class="w" style="color:var(--red)">일</div>'+'월화수목금토'.split('').map(x=>`<div class="w">${x}</div>`).join('');
+ for(let i=0;i<42;i++){const d=D(first.getFullYear(),first.getMonth(),1-first.getDay()+i);if(i>=35&&d.getMonth()!==view.getMonth())break;
+  const k=key(d),a=key(from),b=to?key(to):a;const cls=['d',d.getMonth()!==view.getMonth()&&'out',d.getDay()===0&&'sun',k>=a&&k<=b&&'in',k===a&&'s',k===b&&'e'].filter(Boolean).join(' ');
+  h+=`<div class="${cls}" data-t="${k}"><span>${d.getDate()}</span></div>`;h=h.replace(`data-t="${k}"`,`data-y="${d.getFullYear()}" data-m="${d.getMonth()}" data-d="${d.getDate()}"`)}
+ $('#cal').innerHTML=h;
+ $('#cal').querySelectorAll('.d').forEach(c=>c.onclick=()=>{const d=D(+c.dataset.y,+c.dataset.m,+c.dataset.d);preset='직접입력';if(!to){if(d<from){to=from;from=d}else to=d}else{from=d;to=null}draw()})}
+const mv=(m)=>()=>{view=D(view.getFullYear(),view.getMonth()+m,1);draw()};
+$('#pm').onclick=mv(-1);$('#nm').onclick=mv(1);$('#py').onclick=mv(-12);$('#ny').onclick=mv(12);$('#today').onclick=()=>{view=D(T.getFullYear(),T.getMonth(),1);draw()};
+$('#apply').onclick=()=>{if(!to)to=from;period={from,to,preset};closeSheet();syncBar();if($('#q').value.trim())go($('#q').value)};
+drawRecent();syncBar();
+
+
+
+$('#cmPin').onclick=e=>{e.stopPropagation();const p=$('#cmPop');p.hidden=!p.hidden};document.addEventListener('click',e=>{if(!e.target.closest('#cmPop'))$('#cmPop').hidden=true});
+</script></body></html>
