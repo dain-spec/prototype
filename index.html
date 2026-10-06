@@ -20,7 +20,6 @@ body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;backg
 .lb{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;overflow:auto;display:none;padding:24px}.lb.show{display:block}.lb img{display:block;width:min(960px,100%);margin:0 auto;background:#fff;border-radius:8px}
 .specpane img{display:block;width:100%;border-radius:12px;background:#fff;box-shadow:0 2px 12px rgba(35,58,115,.12)}
 .stage{flex:1;position:relative;min-width:0;height:calc(100% - 40px)}
-.empty{display:grid;place-items:center;text-align:center;height:360px;border-radius:12px;background:#f3f6ff;border:1px dashed #9db4ec;color:#4a5f93;font-size:13px;line-height:1.7}.empty b{display:block;font-size:15px;color:#233a73;margin-bottom:4px}
 .note{position:fixed;left:480px;right:0;bottom:0;height:40px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#5c6370;letter-spacing:-.02em;padding:0 16px;text-align:center}
 #fit{position:absolute;left:50%;top:24px;display:flex;align-items:flex-start;gap:24px;transform-origin:top center}
 .col{width:400px}.swap{display:block;margin:12px auto 0;font:600 13px Pretendard,sans-serif;color:#105aff;background:#fff;border:1px solid #c9d6f5;border-radius:16px;padding:8px 16px;cursor:pointer;text-decoration:underline}.col[hidden]{display:none}.col h2{height:44px;font-size:15px;font-weight:700;color:#333;text-align:center;line-height:20px}
@@ -32,7 +31,7 @@ iframe{display:block;border:0;width:400px;height:850px;background:transparent}
 <div class="wrap">
 <aside class="specpane"><h2><span>설계서 <small id="stitle" style="font-weight:500;color:#5b6f9f">SmartA10 모바일 통합검색 디자인요청</small></span><button id="zoom">크게 보기</button></h2>
 <div class="pg" id="pg"></div><div class="match-note" id="mn"></div>
-<div class="specwrap" id="sw" data-ckey="spec-p1"><img id="simg" src="spec/p1.jpg" alt="설계서"><div class="empty" id="empty" hidden><div><b id="etitle"></b>설계서가 업로드되면<br>이곳에 표시됩니다.</div></div></div></aside>
+<div class="specwrap" id="sw" data-ckey="spec-p1"><img id="simg" src="spec/p1.jpg" alt="설계서"></div></aside>
 <div class="lb" id="lb"><img id="limg" alt=""></div>
 <main class="stage"><div id="fit">
  <div class="col"><iframe id="proto" src="A.html?nospec" title="프로토타입"></iframe><button class="swap" id="swap" type="button">검색필드에서 조회조건 설정</button></div>
@@ -59,7 +58,7 @@ const SPECS={
  deliv:{dir:'spec-deliv',title:'SmartA10 모바일 출고 예정/납기 현황 디자인요청',pages:['개요·목록','보기 방식·상태 필터','조회 범위·직접 입력·조건 검색','출고 예정 상세','거래처 정보·문자 보내기','수주 상세(원전표)','상태별 노출 차이','표시 자릿수 기준']}};
 const cur={search:1,dash:1,deliv:1};let matched=1;
 const pg=document.getElementById('pg'),simg=document.getElementById('simg'),sw=document.getElementById('sw');
-function setSpec(){const S=SPECS[mode];document.getElementById('stitle').textContent=S.title;document.getElementById('empty').hidden=true;simg.hidden=false;showPage(cur[mode],false)}
+function setSpec(){const S=SPECS[mode];document.getElementById('stitle').textContent=S.title;simg.hidden=false;showPage(cur[mode],false)}
 function showPage(n,fromMatch){const S=SPECS[mode];cur[mode]=n;if(fromMatch&&mode==='search')matched=n;
  pg.innerHTML=S.pages.map((t,i)=>`<button class="${i+1===n?'on':''} ${mode==='search'&&i+1===matched?'match':''}" data-n="${i+1}">${i+1}. ${t}</button>`).join('');
  pg.querySelectorAll('button').forEach(b=>b.onclick=()=>showPage(+b.dataset.n,false));
