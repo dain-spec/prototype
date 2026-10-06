@@ -1,7 +1,7 @@
 (function(){
   var PAGE=location.pathname.split('/').pop()||'index.html';
   var lists={},cur=null;
-  function keyOf(c){return c.classList.contains('specwrap')?'cmts:spec':'cmts:'+PAGE}
+  function keyOf(c){return c.classList.contains('specwrap')?'cmts:'+(c.dataset.ckey||'spec'):'cmts:'+PAGE}
   function apiKey(c){return keyOf(c).slice(5)}
   var useApi=true;
   function api(method,p,body){if(!useApi)return Promise.reject();return fetch('/api/comments'+(method==='GET'?'?key='+encodeURIComponent(apiKey(p)):''),{method:method,headers:{'Content-Type':'application/json'},body:method==='GET'?undefined:JSON.stringify(Object.assign({key:apiKey(p)},body))}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
@@ -37,5 +37,5 @@
     compose(hit,(e.clientX-r.left)/s,(e.clientY-r.top)/s)});
   document.addEventListener('click',function(e){if(box&&!e.target.closest('.uc-box')&&!e.target.closest('.uc-pin'))closeBox()});
   function renderAll(){conts().forEach(function(p){render(p);sync(p)})}
-  renderAll();addEventListener('load',renderAll);setInterval(function(){if(!box&&!document.hidden)conts().forEach(sync)},15000);document.addEventListener('visibilitychange',function(){if(!document.hidden&&!box)conts().forEach(sync)});
+  renderAll();window.ucRefresh=function(){closeBox();renderAll()};addEventListener('load',renderAll);setInterval(function(){if(!box&&!document.hidden)conts().forEach(sync)},15000);document.addEventListener('visibilitychange',function(){if(!document.hidden&&!box)conts().forEach(sync)});
 })();

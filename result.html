@@ -76,10 +76,10 @@ const total=5+1+99,cats=[['전체',total],['거래처·구매처',5],['품목',1
 let cur='전체';
 function draw(){
  $('#tabs').innerHTML=cats.map(([n,c])=>`<button class="tab ${cur===n?'on':''}" data-n="${n}">${n} ${c}</button>`).join('');
- $('#tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{cur=b.dataset.n;draw();$('#body').scrollTop=0});
+ $('#tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{cur=b.dataset.n;draw();$('#body').scrollTop=0;try{if(parent!==window)parent.postMessage({specPage:cur==='전체'?2:3},'*')}catch(e){}});
  const list=D.filter(d=>cur==='전체'||d[0]===cur);const cnt=cats.find(c=>c[0]===cur)[1];
  $('#body').innerHTML=`<div class="total">검색결과 총 <b>${cnt}</b>건</div><div class="note">메뉴의 조회 조건(조회범위·거래처)과 무관하게, 권한 범위 전체를 대상으로 검색한 결과입니다. 단, 전표는 조회기간이 올해(${yr}-01-01 ~ ${yr}-12-31)인 것만 표시됩니다.</div>`+
  list.map(([n,c,arrow,rows])=>`<div class="card"><div class="card-h"><span>${n}<b>${c}</b></span>${arrow?'<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>':''}</div><div style="padding:6px 0">${rows.map(r=>it(...r)).join('')}</div></div>`).join('');
  $('#body').querySelectorAll('.it').forEach(e=>e.onclick=()=>toast(`"${e.dataset.t}" 상세 화면으로 이동 (다음 단계)`))}
 draw();
-</script><script src="comments.js"></script><script src="fit.js"></script></body></html>
+</script><script>try{if(parent!==window)parent.postMessage({specPage:2},"*")}catch(e){}</script><script src="comments.js"></script><script src="fit.js"></script></body></html>
