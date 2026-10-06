@@ -40,6 +40,9 @@ module.exports = async (req, res) => {
         || typeof x !== 'number' || typeof y !== 'number') return res.status(400).json({ error: 'bad comment' });
       list.push({ id, x, y, text: text.trim().slice(0, 1000), at: Date.now() });
       if (list.length > 300) list.shift();
+    } else if (req.method === 'PUT') {
+      const c = list.find((it) => it.id === body.id);
+      if (c && typeof body.x === 'number' && typeof body.y === 'number') { c.x = body.x; c.y = body.y; }
     } else if (req.method === 'DELETE') {
       const i = list.findIndex((c) => c.id === body.id);
       if (i >= 0) list.splice(i, 1);

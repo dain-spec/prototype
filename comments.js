@@ -11,7 +11,7 @@
   function save(c){try{localStorage.setItem(keyOf(c),JSON.stringify(lists[keyOf(c)]))}catch(e){}}
   function conts(){return Array.prototype.slice.call(document.querySelectorAll('.phone,.specwrap'))}
   var st=document.createElement('style');
-  st.textContent='.specwrap{position:relative}.uc-pin{position:absolute;width:24px;height:24px;margin:-24px 0 0 -2px;border-radius:12px 12px 12px 2px;background:#7a4dff;color:#fff;font:700 12px/24px Pretendard,sans-serif;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.25);z-index:60;cursor:pointer}'+
+  st.textContent='.specwrap{position:relative}.uc-pin{touch-action:none;user-select:none;position:absolute;width:24px;height:24px;margin:-24px 0 0 -2px;border-radius:12px 12px 12px 2px;background:#7a4dff;color:#fff;font:700 12px/24px Pretendard,sans-serif;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.25);z-index:60;cursor:pointer}'+
   '.uc-box{position:absolute;z-index:70;width:max-content;max-width:200px;min-width:170px;background:#fff;border:1px solid #7a4dff;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.18);padding:10px;font:13px/1.45 Pretendard,sans-serif;color:#333;letter-spacing:-.02em}'+
   '.uc-box textarea{display:block;width:100%;min-height:60px;border:1px solid #e1e1e1;border-radius:8px;padding:8px;font:inherit;resize:none;outline:0}.uc-box textarea:focus{border-color:#7a4dff}'+
   '.uc-box .t{white-space:pre-wrap;word-break:keep-all;overflow-wrap:break-word}'+
@@ -22,7 +22,17 @@
   function place(el,x,y,p){var W=p.offsetWidth,H=p.offsetHeight;el.style.left='0';el.style.top='0';p.appendChild(el);var w=el.offsetWidth,h=el.offsetHeight;el.style.left=Math.max(8,Math.min(W-w-8,x))+'px';el.style.top=Math.max(8,Math.min(H-h-8,y+6))+'px'}
   function render(p){var list=lists[keyOf(p)]||load(p);p.querySelectorAll('.uc-pin').forEach(function(n){n.remove()});
     list.forEach(function(c,i){var d=document.createElement('div');d.className='uc-pin';d.textContent=i+1;d.style.left=c.x+'px';d.style.top=c.y+'px';
-      d.addEventListener('click',function(e){e.stopPropagation();view(p,c,i)});d.addEventListener('contextmenu',function(e){e.stopPropagation()});p.appendChild(d)})}
+      d.addEventListener('click',function(e){e.stopPropagation();if(d._moved){d._moved=false;return}view(p,c,i)});
+      d.addEventListener('pointerdown',function(e){
+        if(e.button!==0)return;e.stopPropagation();closeBox();
+        var sx=e.clientX,sy=e.clientY,ox=c.x,oy=c.y,moved=false;d._moved=false;try{d.setPointerCapture(e.pointerId)}catch(_){}d.style.cursor='grabbing';
+        function mv(ev){var r=p.getBoundingClientRect(),s=r.width/p.offsetWidth;
+          if(!moved&&Math.abs(ev.clientX-sx)+Math.abs(ev.clientY-sy)<4)return;moved=true;
+          c.x=Math.max(0,Math.min(p.offsetWidth,ox+(ev.clientX-sx)/s));c.y=Math.max(0,Math.min(p.offsetHeight,oy+(ev.clientY-sy)/s));
+          d.style.left=c.x+'px';d.style.top=c.y+'px'}
+        function up(){d.removeEventListener('pointermove',mv);d.removeEventListener('pointerup',up);d.removeEventListener('pointercancel',up);d.style.cursor='pointer';
+          if(moved){d._moved=true;save(p);api('PUT',p,{id:c.id,x:c.x,y:c.y}).catch(function(){});setTimeout(function(){d._moved=false},0)}}
+        d.addEventListener('pointermove',mv);d.addEventListener('pointerup',up);d.addEventListener('pointercancel',up)});d.addEventListener('contextmenu',function(e){e.stopPropagation()});p.appendChild(d)})}
   function view(p,c,i){closeBox();box=document.createElement('div');box.className='uc-box';box.innerHTML='<div class="t"></div><div class="uc-row"><button class="del">삭제</button><button class="x">닫기</button></div>';box.querySelector('.t').textContent=c.text;
     box.querySelector('.del').onclick=function(){lists[keyOf(p)].splice(i,1);save(p);closeBox();render(p);api('DELETE',p,{id:c.id}).catch(function(){})};box.querySelector('.x').onclick=closeBox;place(box,c.x,c.y,p)}
   function compose(p,x,y){closeBox();box=document.createElement('div');box.className='uc-box';box.innerHTML='<textarea placeholder="코멘트를 입력하세요"></textarea><div class="uc-row"><button class="x">취소</button><button class="ok">등록</button></div>';
