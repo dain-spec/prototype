@@ -53,7 +53,8 @@ const hl=t=>t.replace('{q}',`<mark>${q}</mark>`).replace(/\{q\}/g,`<mark>${q}</m
 if(P.get('from')){$('#pchip').hidden=false;$('#ptxt').textContent=`${P.get('from')}~${P.get('to')}`}
 $('#px').onclick=()=>{$('#pchip').hidden=true};
 const back=()=>{const v=P.get('v');location.href=(v==='B'?'B.html':'A.html')};
-$('#back').onclick=$('#clear').onclick=$('#q').onclick=back;$('#filter').onclick=()=>toast('상세검색 필터 (다음 단계)');
+const prev=()=>/\/(A|B)\.html/.test(document.referrer);
+$('#back').onclick=()=>prev()?history.back():back();$('#clear').onclick=$('#q').onclick=back;$('#filter').onclick=()=>toast('상세검색 필터 (다음 단계)');
 const BD={구매:['#e7efff','#105aff'],거래:['#ece7ff','#3010ff'],품목:['#ddeef3','#0190a8'],지급:['#ffecee','#fa4553'],판매:['#fff2dc','#ffa000'],수금:['#e9f9f1','#27c36f']};
 const bd=t=>`<span class="bd" style="background:${BD[t][0]};color:${BD[t][1]}">${t}</span>`;
 const amt=(a,s)=>a?`<div class="amt">${a}${s?`<span class="st">${s}</span>`:''}</div>`:'<div class="amt hid">금액 비공개</div>';
