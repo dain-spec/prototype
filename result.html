@@ -57,7 +57,7 @@ $('#back').onclick=$('#clear').onclick=$('#q').onclick=back;$('#filter').onclick
 const BD={구매:['#e7efff','#105aff'],거래:['#ece7ff','#3010ff'],품목:['#ddeef3','#0190a8'],지급:['#ffecee','#fa4553'],판매:['#fff2dc','#ffa000'],수금:['#e9f9f1','#27c36f']};
 const bd=t=>`<span class="bd" style="background:${BD[t][0]};color:${BD[t][1]}">${t}</span>`;
 const amt=(a,s)=>a?`<div class="amt">${a}${s?`<span class="st">${s}</span>`:''}</div>`:'<div class="amt hid">금액 비공개</div>';
-const it=(b,title,sub,a,s,tag,tagCls)=>`<div class="it" data-t="${title.replace(/<[^>]+>/g,'').replace(/"/g,'')}"><div class="l"><div class="t">${bd(b)}<span class="n">${hl(title)}</span></div><div class="sub">${hl(sub)}</div>${tag?`<span class="state ${tagCls||''}">${tag}</span>`:''}</div>${amt(a,s)}</div>`;
+const it=(b,title,sub,a,s,tag,tagCls)=>`<div class="it" data-b="${b}" data-t="${title.replace(/<[^>]+>/g,'').replace(/"/g,'')}"><div class="l"><div class="t">${bd(b)}<span class="n">${hl(title)}</span></div><div class="sub">${hl(sub)}</div>${tag?`<span class="state ${tagCls||''}">${tag}</span>`:''}</div>${amt(a,s)}</div>`;
 const D=[
 ['거래처·구매처',5,false,[
  ['구매','(주){q}상사','V1001<i>|</i>구매처<i>|</i>김더존','1.28억','미지급'],
@@ -80,6 +80,6 @@ function draw(){
  const list=D.filter(d=>cur==='전체'||d[0]===cur);const cnt=cats.find(c=>c[0]===cur)[1];
  $('#body').innerHTML=`<div class="total">검색결과 총 <b>${cnt}</b>건</div><div class="note">메뉴의 조회 조건(조회범위·거래처)과 무관하게, 권한 범위 전체를 대상으로 검색한 결과입니다. 단, 전표는 조회기간이 올해(${yr}-01-01 ~ ${yr}-12-31)인 것만 표시됩니다.</div>`+
  list.map(([n,c,arrow,rows])=>`<div class="card"><div class="card-h"><span>${n}<b>${c}</b></span>${arrow?'<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>':''}</div><div style="padding:6px 0">${rows.map(r=>it(...r)).join('')}</div></div>`).join('');
- $('#body').querySelectorAll('.it').forEach(e=>e.onclick=()=>toast(`"${e.dataset.t}" 상세 화면으로 이동 (다음 단계)`))}
+ $('#body').querySelectorAll('.it').forEach(e=>e.onclick=()=>{if(e.dataset.b==='품목'){const u=new URLSearchParams(location.search);u.set('n',e.dataset.t.replace(/\{q\}/g,q));location.href='item.html?'+u.toString()}else toast(`"${e.dataset.t}" 상세 화면으로 이동 (다음 단계)`)})}
 draw();
 </script><script>try{if(parent!==window)parent.postMessage({specPage:2},"*")}catch(e){}</script><script src="comments.js"></script><script src="fit.js"></script></body></html>
