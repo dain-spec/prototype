@@ -110,7 +110,7 @@ function toast(m){const t=$('.toast');t.textContent=m;t.classList.add('show');cl
 const store={get:()=>{try{return JSON.parse(sessionStorage.getItem('recentA2')||'["스마트A10 프린터","미지급 상위 구매처","오늘 입고 전표","토너 구매 수량"]')}catch(e){return[]}},set:v=>{try{sessionStorage.setItem('recentA2',JSON.stringify(v))}catch(e){}}};
 const IC={clock:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',x:'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>',s:'<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>'};
 function drawRecent(){const l=store.get();const html=l.length?l.map((k,i)=>`<li data-k="${k}"><div class="ic">${IC.clock}</div><span>${k}</span><button class="del" data-i="${i}">${IC.x}</button></li>`).join(''):'<div class="empty">최근 검색어가 없습니다</div>';
- ['#recent'].forEach(id=>{$(id).innerHTML=html;$(id).querySelectorAll('li').forEach(li=>li.onmousedown=e=>{e.preventDefault();const b=e.target.closest('.del');if(b){const l=store.get();l.splice(+b.dataset.i,1);store.set(l);drawRecent();return}go(li.dataset.k)})})}
+ ['#recent'].forEach(id=>{$(id).innerHTML=html;$(id).querySelectorAll('li').forEach(li=>li.onmousedown=e=>{e.preventDefault();const b=e.target.closest('.del');if(b){const l=store.get();l.splice(+b.dataset.i,1);store.set(l);drawRecent();return}go(li.dataset.k,true)})})}
 $('#clearAll').onclick=()=>{store.set([]);drawRecent()};
 $('#rec').innerHTML=['스마트A10 프린터','미지급 상위 구매처'].map(k=>`<button class="rchip" data-k="${k}">${IC.s}${k}</button>`).join('');
 $('#rec').querySelectorAll('button').forEach(b=>b.onclick=()=>go(b.dataset.k));
@@ -119,7 +119,7 @@ let period=null;
 function syncBar(){$('#clear').hidden=!$('#q').value;$('#pchip').hidden=!period;if(period)$('#ptxt').textContent=`${f(period.from)}~${f(period.to)}`}
 $('#q').oninput=syncBar;$('#q').onkeydown=e=>{if(e.key==='Enter')go($('#q').value)};
 $('#clear').onclick=()=>{$('#q').value='';syncBar();$('#q').focus()};$('#px').onclick=()=>{period=null;syncBar()};
-function go(k){k=k.trim();if(k.length<2)return toast('검색어를 2자 이상 입력해주세요');if(!period)return toast('조회기간을 설정해주세요');
+function go(k,force){k=k.trim();if(k.length<2)return toast('검색어를 2자 이상 입력해주세요');if(!period&&!force)return toast('조회기간을 설정해주세요');
  store.set([k,...store.get().filter(x=>x!==k)].slice(0,10));$('#q').value=k;syncBar();drawRecent();exitFocus(true);location.href='result.html?v=B&q='+encodeURIComponent(k)+(period?'&from='+f(period.from)+'&to='+f(period.to):'')}
 // sheet
 let from,to,view,preset;
