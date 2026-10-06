@@ -14,7 +14,7 @@ iframe{display:block;border:0;width:400px;height:850px;background:transparent}
 .reset{position:fixed;right:16px;top:12px;font-size:12px;color:#5c6370;background:#fff;border:0;padding:6px 10px;border-radius:8px;cursor:pointer;font-family:inherit;z-index:2}
 </style></head><body>
 <button class="reset" id="reset">처음부터 다시</button>
-<aside class="specpane"><h2>설계서</h2><img src="spec.png" alt="통합검색 설계서"></aside>
+<aside class="specpane"><h2>설계서</h2><div class="specwrap"><img src="spec.png" alt="통합검색 설계서"></div></aside>
 <main class="stage"><div id="fit">
  <div class="col"><iframe src="A.html?nospec" title="A안"></iframe></div>
  <div class="col"><iframe src="B.html?nospec" title="B안"></iframe></div>
@@ -24,4 +24,4 @@ const fit=document.getElementById('fit'),stage=document.querySelector('.stage');
 function go(){const w=fit.offsetWidth,h=fit.offsetHeight,s=Math.min(1,(stage.clientWidth-24)/w,(stage.clientHeight-24)/h);fit.style.transform=`translate(-50%,-50%) scale(${s})`}
 addEventListener('resize',go);go();
 document.getElementById('reset').onclick=()=>document.querySelectorAll('iframe').forEach(f=>f.contentWindow.location.reload());
-</script></body></html>
+</script><script src="comments.js"></script></body></html>
