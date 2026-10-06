@@ -6,7 +6,8 @@ body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;backg
 .specpane{width:360px;flex:none;height:100%;background:#e3ebff;border-right:1px solid #c9d6f5;overflow-y:auto;padding:24px 20px}
 .specpane h2{font-size:15px;font-weight:700;color:#233a73;margin-bottom:12px}
 .specpane img{display:block;width:100%;border-radius:12px;background:#fff;box-shadow:0 2px 12px rgba(35,58,115,.12)}
-.stage{flex:1;position:relative;min-width:0}
+.stage{flex:1;position:relative;min-width:0;height:calc(100% - 40px)}
+.note{position:fixed;left:360px;right:0;bottom:0;height:40px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#5c6370;letter-spacing:-.02em;padding:0 16px;text-align:center}
 #fit{position:absolute;left:50%;top:24px;display:flex;align-items:flex-start;gap:24px;transform-origin:top center}
 .col{width:400px}.col h2{height:44px;font-size:15px;font-weight:700;color:#333;text-align:center;line-height:20px}
 .col h2 span{display:block;font-size:12px;font-weight:500;color:#5c6370;margin-top:2px}
@@ -19,6 +20,7 @@ iframe{display:block;border:0;width:400px;height:850px;background:transparent}
  <div class="col"><iframe src="A.html?nospec" title="A안"></iframe></div>
  <div class="col"><iframe src="B.html?nospec" title="B안"></iframe></div>
 </div></main>
+<footer class="note">프로토타입은 디자인 산출물과 다르게 제작되었습니다. 최종본은 피그마 파일입니다</footer>
 <script>
 const fit=document.getElementById('fit'),stage=document.querySelector('.stage');
 function go(){const w=fit.offsetWidth,h=fit.offsetHeight,s=Math.min(1,(stage.clientWidth-24)/w,(stage.clientHeight-48)/h);fit.style.transform=`translate(-50%,0) scale(${s})`}
