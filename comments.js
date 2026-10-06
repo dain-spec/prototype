@@ -2,6 +2,11 @@
   var PAGE=location.pathname.split('/').pop()||'index.html';
   var lists={},cur=null;
   function keyOf(c){return c.classList.contains('specwrap')?'cmts:spec':'cmts:'+PAGE}
+  function apiKey(c){return keyOf(c).slice(5)}
+  var useApi=true;
+  function api(method,p,body){if(!useApi)return Promise.reject();return fetch('/api/comments'+(method==='GET'?'?key='+encodeURIComponent(apiKey(p)):''),{method:method,headers:{'Content-Type':'application/json'},body:method==='GET'?undefined:JSON.stringify(Object.assign({key:apiKey(p)},body))}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
+  function sync(p){api('GET',p).then(function(l){lists[keyOf(p)]=l;save(p);render(p)}).catch(function(){useApi=false})}
+  function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
   function load(c){var k=keyOf(c);try{lists[k]=JSON.parse(localStorage.getItem(k)||'[]')}catch(e){lists[k]=[]}return lists[k]}
   function save(c){try{localStorage.setItem(keyOf(c),JSON.stringify(lists[keyOf(c)]))}catch(e){}}
   function conts(){return Array.prototype.slice.call(document.querySelectorAll('.phone,.specwrap'))}
@@ -15,13 +20,13 @@
   var box=null;
     function closeBox(){if(box){box.remove();box=null}}
   function place(el,x,y,p){var W=p.offsetWidth,H=p.offsetHeight;el.style.left='0';el.style.top='0';p.appendChild(el);var w=el.offsetWidth,h=el.offsetHeight;el.style.left=Math.max(8,Math.min(W-w-8,x))+'px';el.style.top=Math.max(8,Math.min(H-h-8,y+6))+'px'}
-  function render(p){var list=load(p);p.querySelectorAll('.uc-pin').forEach(function(n){n.remove()});
+  function render(p){var list=lists[keyOf(p)]||load(p);p.querySelectorAll('.uc-pin').forEach(function(n){n.remove()});
     list.forEach(function(c,i){var d=document.createElement('div');d.className='uc-pin';d.textContent=i+1;d.style.left=c.x+'px';d.style.top=c.y+'px';
       d.addEventListener('click',function(e){e.stopPropagation();view(p,c,i)});d.addEventListener('contextmenu',function(e){e.stopPropagation()});p.appendChild(d)})}
   function view(p,c,i){closeBox();box=document.createElement('div');box.className='uc-box';box.innerHTML='<div class="t"></div><div class="uc-row"><button class="del">삭제</button><button class="x">닫기</button></div>';box.querySelector('.t').textContent=c.text;
-    box.querySelector('.del').onclick=function(){lists[keyOf(p)].splice(i,1);save(p);closeBox();render(p)};box.querySelector('.x').onclick=closeBox;place(box,c.x,c.y,p)}
+    box.querySelector('.del').onclick=function(){lists[keyOf(p)].splice(i,1);save(p);closeBox();render(p);api('DELETE',p,{id:c.id}).catch(function(){})};box.querySelector('.x').onclick=closeBox;place(box,c.x,c.y,p)}
   function compose(p,x,y){closeBox();box=document.createElement('div');box.className='uc-box';box.innerHTML='<textarea placeholder="코멘트를 입력하세요"></textarea><div class="uc-row"><button class="x">취소</button><button class="ok">등록</button></div>';
-    var ta=box.querySelector('textarea');function ok(){var t=ta.value.trim();if(!t)return closeBox();load(p);lists[keyOf(p)].push({x:x,y:y,text:t});save(p);closeBox();render(p)}
+    var ta=box.querySelector('textarea');function ok(){var t=ta.value.trim();if(!t)return closeBox();var n={id:uid(),x:x,y:y,text:t};lists[keyOf(p)]=lists[keyOf(p)]||load(p);lists[keyOf(p)].push(n);save(p);closeBox();render(p);api('POST',p,n).catch(function(){})}
     box.querySelector('.ok').onclick=ok;box.querySelector('.x').onclick=closeBox;
     ta.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();ok()}if(e.key==='Escape')closeBox()});
     place(box,x,y,p);ta.focus()}
@@ -31,6 +36,6 @@
     var r=hit.getBoundingClientRect(),s=r.width/hit.offsetWidth;
     compose(hit,(e.clientX-r.left)/s,(e.clientY-r.top)/s)});
   document.addEventListener('click',function(e){if(box&&!e.target.closest('.uc-box')&&!e.target.closest('.uc-pin'))closeBox()});
-  function renderAll(){conts().forEach(render)}
-  renderAll();addEventListener('load',renderAll);
+  function renderAll(){conts().forEach(function(p){render(p);sync(p)})}
+  renderAll();addEventListener('load',renderAll);setInterval(function(){if(!box&&!document.hidden)conts().forEach(sync)},15000);document.addEventListener('visibilitychange',function(){if(!document.hidden&&!box)conts().forEach(sync)});
 })();

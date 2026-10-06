@@ -1,0 +1,24 @@
+{
+  "name": "proto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "comments.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dain-spec/prototype.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/dain-spec/prototype/issues"
+  },
+  "homepage": "https://github.com/dain-spec/prototype#readme",
+  "dependencies": {
+    "@vercel/blob": "^2.8.0"
+  }
+}
