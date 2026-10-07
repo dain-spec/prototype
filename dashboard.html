@@ -245,6 +245,8 @@ function render(){const sh=$('#sheet');sh.classList.remove('sw');if(!firstRender
   $('#bc').onclick=()=>{if(NOAI)return closeSheet();view='main';render()};$('#bo').onclick=()=>{draft.per={key:pk,from:a,to:b||a};if(NOAI){S.per={...draft.per};paintCard();return closeSheet()}view='main';render()};draw()}}
 $('#setCard').onclick=openSheet;$('#dim').onclick=closeSheet;
 let open=!NOAI;function paintFold(){$('#days').style.display=open?'':'none';$('#fold').firstChild.textContent=open?'일별 목록 접기':'일별 목록 보기';$('#fa').classList.toggle('dn',!open);if(window.ucRefresh)ucRefresh()}
-paintFold();$('#fold').onclick=()=>{open=!open;paintFold();return;$('#days').style.display=open?'':'none';$('#fold').firstChild.textContent=open?'일별 목록 접기':'일별 목록 펼치기';$('#fa').innerHTML=open?'<path d="M6 15l6-6 6 6"/>':'<path d="M6 9l6 6 6-6"/>'};
+// 펼친 뒤 목록 끝(접기 버튼)이 하단 내비 위로 보이도록 스크롤을 밀어 올림
+function revealFold(){const sc=$('#sc'),r=sc.getBoundingClientRect(),k=r.height/sc.offsetHeight,fb=($('#fold').getBoundingClientRect().bottom-r.top)/k,limit=sc.clientHeight-106;if(fb>limit)sc.scrollTo({top:sc.scrollTop+fb-limit,behavior:'smooth'})}
+paintFold();$('#fold').onclick=()=>{open=!open;paintFold();if(open)revealFold();return;$('#days').style.display=open?'':'none';$('#fold').firstChild.textContent=open?'일별 목록 접기':'일별 목록 펼치기';$('#fa').innerHTML=open?'<path d="M6 15l6-6 6 6"/>':'<path d="M6 9l6 6 6-6"/>'};
 try{if(parent!==window)parent.postMessage({specPage:NOAI?5:1},'*')}catch(e){}
 </script><script src="comments.js"></script><script src="fit.js"></script></body></html>
