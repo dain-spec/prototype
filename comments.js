@@ -22,8 +22,10 @@
   function contOf(p,c){if(c.a==null)return p;var l=scrollers(p),n=l[c.a];if(n&&getComputedStyle(n).position==='static')n.style.position='relative';return n||p}
     function closeBox(){if(box){box.remove();box=null}}
   function place(el,x,y,p){var W=p.scrollWidth||p.offsetWidth,H=p.scrollHeight||p.offsetHeight;el.style.left='0';el.style.top='0';p.appendChild(el);var w=el.offsetWidth,h=el.offsetHeight;el.style.left=Math.max(8,Math.min(W-w-8,x))+'px';el.style.top=Math.max(8,Math.min(H-h-8,y+6))+'px'}
-  function render(p){var list=lists[keyOf(p)]||load(p);p.querySelectorAll('.uc-pin').forEach(function(n){n.remove()});
+  function render(p){var list=lists[keyOf(p)]||load(p);p.querySelectorAll('.uc-pin').forEach(function(n){n.remove()});var hs=new Map();
     list.forEach(function(c,i){var host=contOf(p,c);var d=document.createElement('div');d.className='uc-pin';d.textContent=i+1;d.style.left=c.x+'px';d.style.top=c.y+'px';
+      // pin anchored below the current content (e.g. content hidden in another case) would stretch the scroll area: hide it
+      if(c.a!=null){if(!hs.has(host))hs.set(host,host.scrollHeight);if(c.y>hs.get(host))d.style.display='none'}
       d.addEventListener('click',function(e){e.stopPropagation();if(d._moved){d._moved=false;return}view(p,c,i)});
       d.addEventListener('pointerdown',function(e){
         if(e.button!==0)return;e.stopPropagation();closeBox();

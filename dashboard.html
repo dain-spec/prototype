@@ -244,7 +244,7 @@ function render(){const sh=$('#sheet');sh.classList.remove('sw');if(!firstRender
   const mv=m=>()=>{cmo=mk(cmo.getFullYear(),cmo.getMonth()+m,1);draw()};$('#pm').onclick=mv(-1);$('#nm').onclick=mv(1);$('#py').onclick=mv(-12);$('#ny').onclick=mv(12);$('#td').onclick=()=>{cmo=mk(2026,8,1);draw()};
   $('#bc').onclick=()=>{if(NOAI)return closeSheet();view='main';render()};$('#bo').onclick=()=>{draft.per={key:pk,from:a,to:b||a};if(NOAI){S.per={...draft.per};paintCard();return closeSheet()}view='main';render()};draw()}}
 $('#setCard').onclick=openSheet;$('#dim').onclick=closeSheet;
-let open=!NOAI;function paintFold(){$('#days').style.display=open?'':'none';$('#fold').firstChild.textContent=open?'일별 목록 접기':'일별 목록 보기';$('#fa').classList.toggle('dn',!open)}
+let open=!NOAI;function paintFold(){$('#days').style.display=open?'':'none';$('#fold').firstChild.textContent=open?'일별 목록 접기':'일별 목록 보기';$('#fa').classList.toggle('dn',!open);if(window.ucRefresh)ucRefresh()}
 paintFold();$('#fold').onclick=()=>{open=!open;paintFold();return;$('#days').style.display=open?'':'none';$('#fold').firstChild.textContent=open?'일별 목록 접기':'일별 목록 펼치기';$('#fa').innerHTML=open?'<path d="M6 15l6-6 6 6"/>':'<path d="M6 9l6 6 6-6"/>'};
 try{if(parent!==window)parent.postMessage({specPage:NOAI?5:1},'*')}catch(e){}
 </script><script src="comments.js"></script><script src="fit.js"></script></body></html>
