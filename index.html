@@ -18,7 +18,7 @@ body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;backg
 .pg button.match{box-shadow:0 0 0 2px #7a4dff}
 .match-note{font-size:12px;color:#5b3fd1;margin-bottom:10px;min-height:16px}
 .lb{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;overflow:auto;display:none;padding:24px}.lb.show{display:block}.lb img{display:block;width:min(960px,100%);margin:0 auto;background:#fff;border-radius:8px}
-.specpane img{display:block;width:100%;border-radius:12px;background:#fff;box-shadow:0 2px 12px rgba(35,58,115,.12)}
+.specpane img{cursor:zoom-in;display:block;width:100%;border-radius:12px;background:#fff;box-shadow:0 2px 12px rgba(35,58,115,.12)}
 .stage{flex:1;position:relative;min-width:0;height:calc(100% - 40px)}
 .note{position:fixed;left:480px;right:0;bottom:0;height:40px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#5c6370;letter-spacing:-.02em;padding:0 16px;text-align:center}
 #fit{position:absolute;left:50%;top:24px;display:flex;align-items:flex-start;gap:24px;transform-origin:top center}
@@ -67,7 +67,8 @@ function showPage(n,fromMatch){const S=SPECS[mode];cur[mode]=n;if(fromMatch&&mod
  document.getElementById('mn').textContent=mode==='search'&&n===matched?'프로토타입 화면과 연결된 페이지':'';
  if(window.ucRefresh)window.ucRefresh()}
 addEventListener('message',e=>{const d=e.data;if(d&&d.specPage&&mode==='search')showPage(d.specPage,true)});
-document.getElementById('zoom').onclick=()=>{document.getElementById('limg').src=simg.src;document.getElementById('lb').classList.add('show')};
+const openLb=()=>{document.getElementById('limg').src=simg.src;document.getElementById('lb').classList.add('show')};
+document.getElementById('zoom').onclick=openLb;simg.onclick=openLb;
 document.getElementById('lb').onclick=()=>document.getElementById('lb').classList.remove('show');
 showPage(1,true);
 </script><script src="comments.js"></script></body></html>
