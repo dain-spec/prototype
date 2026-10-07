@@ -2,7 +2,8 @@
   var st=document.createElement('style');
   st.textContent='html,body{height:100%;overflow:hidden}body{display:block!important;position:relative;min-height:0!important}#fit{position:absolute;left:50%;top:24px;display:flex;align-items:flex-start;gap:28px;transform-origin:top center}';
   document.head.appendChild(st);
-  if(/nospec/.test(location.search)){var sp=document.querySelector('.spec');if(sp)sp.remove()}
+  // 셸(index.html) iframe 안에서는 설계서를 왼쪽 패널이 보여주므로 화면 내 설계서는 항상 숨김
+  if(/nospec/.test(location.search)||window.parent!==window){var sp=document.querySelector('.spec');if(sp)sp.remove()}
   var fit=document.createElement('div');fit.id='fit';
   Array.prototype.slice.call(document.body.children).forEach(function(n){if(n.tagName!=='SCRIPT')fit.appendChild(n)});
   document.body.insertBefore(fit,document.body.firstChild);
