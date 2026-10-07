@@ -118,6 +118,7 @@ function toast(m){const t=$('.toast');t.textContent=m;t.classList.add('show');cl
 document.querySelectorAll('[data-t]').forEach(e=>e.onclick=()=>toast(e.dataset.t+' (다음 단계)'));
 $('#goSearch').onclick=()=>{if(parent!==window)parent.postMessage({gotoMenu:'search'},'*');else location.href='A.html'};
 const P=new URLSearchParams(location.search),NOAI=P.get('case')==='noai';
+if(P.get('tabs')==='none')document.querySelector('.tabs').remove();
 $('#info').onclick=e=>{e.stopPropagation();$('#help').hidden=!$('#help').hidden};document.addEventListener('click',e=>{if(!e.target.closest('#help'))$('#help').hidden=true});
 if(NOAI){$('#brief').remove();$('#dept').remove();$('#scope').innerHTML='영업 1부 <i style="font-style:normal;color:#ccc;margin:0 4px">|</i> 김사원(본인)';$('#period').textContent='오늘 (2026.09.16)';$('#help').hidden=false}
 let open=!NOAI;function paintFold(){$('#days').style.display=open?'':'none';$('#fold').firstChild.textContent=open?'일별 목록 접기':'일별 목록 보기';$('#fa').innerHTML=open?'<path d="M6 15l6-6 6 6"/>':'<path d="M6 9l6 6 6-6"/>'}
