@@ -185,12 +185,12 @@ function selDay(i){const ch=$('.chart');ch.querySelectorAll('.g').forEach((x,j)=
  ch.querySelector('.selbg').style.left=ch.querySelectorAll('.g')[i].style.left;
  ch.querySelectorAll('.pt').forEach(p=>{const on=+p.dataset.i===i,k=p.classList.contains('in')?'in':'out';p.classList.toggle('sel',on);p.src=`img/dash/pt-${k}${on?'-sel':''}.svg`});
  const d=ch.querySelectorAll('.lbl')[i].textContent;$('#dd').textContent='2026.'+d.split('/').map(n=>n.padStart(2,'0')).join('.');return d}
-document.querySelectorAll('.chart .g').forEach((g,i)=>g.onclick=e=>{e.stopPropagation();const tip=$('#tip'),ch=g.closest('.chart');
+document.querySelectorAll('.chart .g').forEach((g,i)=>g.onclick=e=>{e.stopPropagation();$('#help').hidden=true;const tip=$('#tip'),ch=g.closest('.chart');
  if(!tip.hidden&&g.classList.contains('sel')){tip.hidden=true;return}
  const d=selDay(i),r=TIP[d];tip.innerHTML=`<b>${$('#dd').textContent}</b>`+(r?r.map(([a,b,c],k)=>`<div><span>${a}</span><p class="${k?'n':'o'}"><i>${b}</i><i class="dv"></i><strong>${c}</strong></p></div>`).join(''):'<div><span style="color:#989898">아직 실적 없음</span></div>');
  tip.hidden=false;const w=tip.offsetWidth;tip.style.left=Math.max(-16,Math.min(ch.clientWidth-w+16,g.offsetLeft+g.offsetWidth/2-w/2))+'px'});
 document.addEventListener('click',e=>{if(!e.target.closest('#tip'))$('#tip').hidden=true});
-$('#info').onclick=e=>{e.stopPropagation();$('#help').hidden=!$('#help').hidden};document.addEventListener('click',e=>{if(!e.target.closest('#help'))$('#help').hidden=true});
+$('#info').onclick=e=>{e.stopPropagation();$('#help').hidden=!$('#help').hidden;$('#tip').hidden=true};document.addEventListener('click',e=>{if(!e.target.closest('#help'))$('#help').hidden=true});
 if(NOAI){$('#brief').remove();$('#dept').remove();$('#scope').innerHTML='영업 1부 <i style="font-style:normal;color:#ccc;margin:0 4px">|</i> 김사원(본인)';$('#period').textContent='오늘 (2026.09.16)';$('#help').hidden=false}
 
 // ===== 조회 설정 =====
