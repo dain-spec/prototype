@@ -40,7 +40,8 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
 .flow h3{font-size:17px;font-weight:700;color:#222;line-height:1.4;letter-spacing:-.34px;display:flex;align-items:center;gap:2px;height:24px}.flow h3 .ia{width:18px;height:18px}.flow h3 .ia img{inset:8.33%;width:83.34%;height:83.34%}
 .cw{display:flex;flex-direction:column;gap:12px}
 .dnav{display:flex;align-items:center;justify-content:center;gap:12px;height:28px;margin-bottom:6px;font-size:16px;font-weight:700;color:#333;letter-spacing:-.32px}
-.dnav .l img{inset:12.5% 33.33% 12.5% 26.04%;width:40.63%;height:75%}
+.dnav .nv{position:relative;width:14px;height:14px;color:#4a4a4a}.dnav .nv:disabled{color:#b4b4b4;cursor:default}.dnav .nv svg{position:absolute;top:1.75px;width:5.69px;height:10.5px;fill:currentColor;stroke:none}
+.dval{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;height:48px;margin-bottom:6px;font-size:14px;line-height:20px;letter-spacing:-.28px;color:#333;white-space:nowrap}.dval>span{display:flex;align-items:center;gap:6px}.dval b{height:24px;padding:0 4px;border-radius:4px;font-size:13px;font-weight:700;letter-spacing:-.26px;display:flex;align-items:center}.dval b.o{background:#eff4ff;color:var(--pri)}.dval b.n{background:#e9f9f1;color:#0fa75b}.dval p{display:flex;align-items:center;gap:4px}.dval i{font-style:normal;font-weight:400}.dval strong{font-weight:700}.dval .e{color:#989898;height:24px;line-height:24px}
 .chart{position:relative;height:150px}
 .chart .selbg{position:absolute;top:4px;width:88px;height:124px;border-radius:8px;background:#eff4ff;transition:left .15s}
 .chart .grid-l{position:absolute;left:0;top:7px;width:303px;height:121px}
@@ -48,8 +49,6 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
 .chart .g i{display:block;width:14px;border-radius:4px 4px 0 0}.chart .g i.o{background:#719bfc;opacity:.5}.chart .g i.i{background:#27c36f;opacity:.4}
 .chart .ln{position:absolute;pointer-events:none;z-index:2}.chart .pt{position:absolute;width:8px;height:8px;pointer-events:none;z-index:3}.chart .pt.sel{width:12px;height:12px;margin:-2px 0 0 -2px}
 .chart .lbl{position:absolute;top:134px;transform:translateX(-50%);font-size:12px;line-height:1.4;letter-spacing:-.24px;color:#989898;white-space:nowrap}.chart .lbl.s{font-weight:700;color:var(--pri)}
-.tip{position:absolute;left:0;top:-10px;background:#fff;border:1px solid #e1e1e1;border-radius:8px;padding:11px;filter:drop-shadow(1px 4px 6px rgba(0,0,0,.06));display:flex;flex-direction:column;gap:4px;z-index:5;white-space:nowrap}.tip>b{line-height:20px!important}.tip div{line-height:18px!important}
-.tip[hidden]{display:none}.tip>b{font-size:14px;font-weight:700;color:#333;line-height:1.4;letter-spacing:-.28px}.tip div{display:flex;align-items:center;gap:8px;font-size:13px;line-height:1.4;letter-spacing:-.26px;color:#333}.tip div p{display:flex;align-items:center;gap:4px}.tip i{font-style:normal;font-weight:500}.tip strong{font-weight:700}.tip .o{color:var(--pri)}.tip .n{color:#27c36f}
 .leg{display:flex;justify-content:center;gap:12px;font-size:12px;color:var(--t2);line-height:1.4;letter-spacing:-.24px}.leg span{display:flex;align-items:center;gap:4px}.leg img{width:12px;height:2px;display:block}.leg s{width:8px;height:8px;border-radius:2px;display:inline-block}
 .days{display:flex;flex-direction:column}.day{padding:8px 0;display:flex;flex-direction:column;gap:6px;border-bottom:1px solid #ededed}.day:last-child{border-bottom:0}
 .day h4{font-size:14px;font-weight:500;color:#333;line-height:20px;letter-spacing:-.28px}.day.empty{padding:8px 0;text-align:left}.day.empty h4,.day.empty p{color:#989898}.day.empty p{font-size:14px;line-height:20px;letter-spacing:-.28px}
@@ -133,8 +132,9 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
   <h3>선택기간 업무 흐름<button id="info" aria-label="설명" class="ia"><img src="img/dash/ic-info.svg" alt=""></button></h3>
   <div class="help" id="help" hidden><p><b>구간</b> : 상단 조회 기간을 그대로 따릅니다.<br>3일 미만이면 3일로 넓히고, 62일을 넘으면<br>월 단위로 묶어 봅니다.</p><p><b>읽는 법</b> : 그래프에서 날짜를 누르거나<br>값 표시 줄 옆의 ‹ › 로 한 칸씩 옮기면 그 날짜의<br>수량과 금액이 함께 표시됩니다. 기간의 끝에서<br>한 번 더 누르면 어제 ↔ 오늘, 지난주 ↔ 이번주,<br>저번달 ↔ 이번달로 넘어갑니다.</p><p><b>수량은 선, 금액은 막대</b>로 그리며 단위가 달라 축을<br>따로 잡습니다. 선과 막대의 높이는 서로 비교하지<br>않습니다.</p><p><b>금액</b>은 공급가액 기준이고, 출고 현황 · 입고 현황과<br>같은 자료를 집계한 값입니다.</p></div>
   <div class="cw"><div>
-  <div class="dnav"><span class="ia a14 l"><img src="img/dash/chev-left.svg" alt=""></span><span id="dd">2026.09.16</span><span class="ia a14"><img src="img/dash/chev-right.svg" alt=""></span></div>
-  <div class="chart"><div class="tip" id="tip" hidden></div><div class="selbg" style="left:211px"></div><img class="grid-l" src="img/dash/gridline.svg" alt="">
+  <div class="dnav"><button class="nv" id="dPrev" aria-label="이전 날짜"><svg viewBox="0 0 5.68772 10.5" style="left:3.65px"><path d="M4.94073 0.128174C5.11158 -0.0426806 5.38853 -0.0426806 5.55938 0.128174C5.73023 0.299028 5.73023 0.575972 5.55938 0.746826L1.05621 5.25L5.55938 9.75317C5.73023 9.92403 5.73023 10.201 5.55938 10.3718C5.38852 10.5426 5.11157 10.5427 4.94073 10.3718L0.128227 5.55933C-0.031948 5.39915 -0.042117 5.14555 0.0980353 4.97371L0.128227 4.94067L4.94073 0.128174Z"/></svg></button><span id="dd">2026.09.16</span><button class="nv" id="dNext" aria-label="다음 날짜" disabled><svg viewBox="0 0 5.68772 10.5" style="left:4.67px"><path d="M0.128337 0.128174C0.299191 -0.0426806 0.576134 -0.0426806 0.746989 0.128174L5.55949 4.94067L5.58968 4.97371C5.72983 5.14555 5.71966 5.39915 5.55949 5.55933L0.746989 10.3718C0.576145 10.5427 0.299194 10.5426 0.128337 10.3718C-0.0425178 10.201 -0.0425178 9.92403 0.128337 9.75317L4.63151 5.25L0.128337 0.746826C-0.0425179 0.575972 -0.0425179 0.299028 0.128337 0.128174Z"/></svg></button></div>
+  <div class="dval" id="dval"></div>
+  <div class="chart"><div class="selbg" style="left:211px"></div><img class="grid-l" src="img/dash/gridline.svg" alt="">
    <div class="g" style="left:3px" data-d="9/14"><i class="o" style="height:62px"></i><i class="i" style="height:72px"></i></div><div class="g" style="left:107px" data-d="9/15"><i class="o" style="height:58px"></i><i class="i" style="height:76px"></i></div><div class="g sel" style="left:211px" data-d="9/16"><i class="o" style="height:72px"></i><i class="i" style="height:106px"></i></div>
    <img class="ln" src="img/dash/line-in.svg" alt="" style="left:46px;top:9px;width:210px;height:61px"><img class="ln" src="img/dash/line-out.svg" alt="" style="left:46px;top:117px;width:210px;height:5px">
    <img class="pt in" data-i="0" src="img/dash/pt-in.svg" alt="" style="left:43px;top:61px"><img class="pt in" data-i="1" src="img/dash/pt-in.svg" alt="" style="left:147px;top:65px"><img class="pt in sel" data-i="2" src="img/dash/pt-in-sel.svg" alt="" style="left:251px;top:6px"><img class="pt out" data-i="0" src="img/dash/pt-out.svg" alt="" style="left:43px;top:117px"><img class="pt out" data-i="1" src="img/dash/pt-out.svg" alt="" style="left:147px;top:117px"><img class="pt out sel" data-i="2" src="img/dash/pt-out-sel.svg" alt="" style="left:251px;top:114px">
@@ -180,17 +180,19 @@ $('#goMenu').onclick=()=>{location.href='fullmenu.html'+location.search};
 $('#goSearch').onclick=()=>{if(parent!==window)parent.postMessage({gotoMenu:'search'},'*');else location.href='A.html'};
 const P=new URLSearchParams(location.search),NOAI=P.get('case')==='noai';
 if(P.get('tabs')==='none')document.querySelector('.tabs').remove();
-const TIP={'9/14':null,'9/15':[['출고','7건','1,860,000원'],['입고','6건','1,860,000원']],'9/16':[['출고','5건','1,540,000원'],['입고','5건','1,540,000원']]};
-function selDay(i){const ch=$('.chart');ch.querySelectorAll('.g').forEach((x,j)=>x.classList.toggle('sel',j===i));ch.querySelectorAll('.lbl').forEach((x,j)=>x.classList.toggle('s',j===i));
- ch.querySelector('.selbg').style.left=ch.querySelectorAll('.g')[i].style.left;
+const TIP={'9/14':null,'9/15':[['출고','7건','1,860,000원'],['입고','6건','1,860,000원']],'9/16':[['출고','9,999건','999,999,999원'],['입고','9,999건','999,999,999원']]};
+let cur=2;
+function selDay(i){cur=i;const ch=$('.chart'),gs=ch.querySelectorAll('.g');gs.forEach((x,j)=>x.classList.toggle('sel',j===i));ch.querySelectorAll('.lbl').forEach((x,j)=>x.classList.toggle('s',j===i));
+ ch.querySelector('.selbg').style.left=gs[i].style.left;
  ch.querySelectorAll('.pt').forEach(p=>{const on=+p.dataset.i===i,k=p.classList.contains('in')?'in':'out';p.classList.toggle('sel',on);p.src=`img/dash/pt-${k}${on?'-sel':''}.svg`});
+ $('#dPrev').disabled=i===0;$('#dNext').disabled=i===gs.length-1;
  const d=ch.querySelectorAll('.lbl')[i].textContent;$('#dd').textContent='2026.'+d.split('/').map(n=>n.padStart(2,'0')).join('.');return d}
-document.querySelectorAll('.chart .g').forEach((g,i)=>g.onclick=e=>{e.stopPropagation();$('#help').hidden=true;const tip=$('#tip'),ch=g.closest('.chart');
- if(!tip.hidden&&g.classList.contains('sel')){tip.hidden=true;return}
- const d=selDay(i),r=TIP[d];tip.innerHTML=`<b>${$('#dd').textContent}</b>`+(r?r.map(([a,b,c],k)=>`<div><span>${a}</span><p class="${k?'n':'o'}"><i>${b}</i><i class="dv"></i><strong>${c}</strong></p></div>`).join(''):'<div><span style="color:#989898">아직 실적 없음</span></div>');
- tip.hidden=false;const w=tip.offsetWidth;tip.style.left=Math.max(-16,Math.min(ch.clientWidth-w+16,g.offsetLeft+g.offsetWidth/2-w/2))+'px'});
-document.addEventListener('click',e=>{if(!e.target.closest('#tip'))$('#tip').hidden=true});
-$('#info').onclick=e=>{e.stopPropagation();$('#help').hidden=!$('#help').hidden;$('#tip').hidden=true};document.addEventListener('click',e=>{if(!e.target.closest('#help'))$('#help').hidden=true});
+function paintVal(d){const r=TIP[d];$('#dval').innerHTML=r?r.map(([a,b,c],k)=>`<span><b class="${k?'n':'o'}">${a}</b><p><i>${b}</i><i class="dv"></i><strong>${c}</strong></p></span>`).join(''):'<span class="e">아직 실적 없음</span>'}
+const pick=i=>paintVal(selDay(i));
+document.querySelectorAll('.chart .g').forEach((g,i)=>g.onclick=e=>{e.stopPropagation();$('#help').hidden=true;pick(i)});
+[['#dPrev',-1],['#dNext',1]].forEach(([id,k])=>$(id).onclick=e=>{e.stopPropagation();const i=cur+k;if(i<0||i>2)return;pick(i)});
+pick(cur);
+$('#info').onclick=e=>{e.stopPropagation();$('#help').hidden=!$('#help').hidden};document.addEventListener('click',e=>{if(!e.target.closest('#help'))$('#help').hidden=true});
 if(NOAI){$('#brief').remove();$('#dept').remove();$('#scope').innerHTML='영업 1부 <i style="font-style:normal;color:#ccc;margin:0 4px">|</i> 김사원(본인)';$('#period').textContent='오늘 (2026.09.16)'}
 
 // ===== 조회 설정 =====
