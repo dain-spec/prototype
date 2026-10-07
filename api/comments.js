@@ -38,7 +38,9 @@ module.exports = async (req, res) => {
       const { id, x, y, text } = body;
       if (typeof text !== 'string' || !text.trim() || typeof id !== 'string' || !/^[\w-]{1,40}$/.test(id)
         || typeof x !== 'number' || typeof y !== 'number') return res.status(400).json({ error: 'bad comment' });
-      list.push({ id, x, y, text: text.trim().slice(0, 1000), at: Date.now() });
+      const item = { id, x, y, text: text.trim().slice(0, 1000), at: Date.now() };
+      if (Number.isInteger(body.a) && body.a >= 0 && body.a < 20) item.a = body.a;
+      list.push(item);
       if (list.length > 300) list.shift();
     } else if (req.method === 'PUT') {
       const c = list.find((it) => it.id === body.id);
