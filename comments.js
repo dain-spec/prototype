@@ -1,5 +1,7 @@
 (function(){
   var PAGE=location.pathname.split('/').pop()||'index.html';
+  // 댓글은 AI 배포 case 기준 → AI 미배포 case(case=noai)는 별도 목록으로 분리해 기존 핀이 보이지 않게 함
+  if(/[?&]case=noai\b/.test(location.search))PAGE+='.noai';
   var lists={},cur=null;
   function keyOf(c){return c.classList.contains('specwrap')?'cmts:'+(c.dataset.ckey||'spec'):'cmts:'+PAGE}
   function apiKey(c){return keyOf(c).slice(5)}
