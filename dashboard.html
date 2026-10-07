@@ -208,7 +208,7 @@ function paintCard(){$('#scope').innerHTML=scopeText();$('#period').textContent=
 paintCard();
 const ARW='<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>',CHK='<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>';
 let draft,view='main',q='',cmo;
-function openSheet(){draft={dept:S.dept,emp:S.emp,per:{...S.per}};view='main';q='';render();$('#dim').classList.add('show');$('#sheet').classList.add('show')}
+function openSheet(){draft={dept:S.dept,emp:S.emp,per:{...S.per}};view=NOAI?'per':'main';if(NOAI)cmo=mk(draft.per.from.getFullYear(),draft.per.from.getMonth(),1);q='';render();$('#dim').classList.add('show');$('#sheet').classList.add('show')}
 function closeSheet(){$('#dim').classList.remove('show');$('#sheet').classList.remove('show')}
 function btns(ok){return `<div class="btns"><button class="b1" id="bc">취소</button><button class="b2" id="bo">${ok||'적용'}</button></div>`}
 function render(){const sh=$('#sheet');
@@ -239,7 +239,7 @@ function render(){const sh=$('#sheet');
    <div class="rng"><div><b id="fT" style="font-weight:400"></b><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></div><i>~</i><div><b id="tT" style="font-weight:400"></b><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></div></div>
    <div class="hr"></div><div class="ch"><div><button id="py"><svg viewBox="0 0 24 24"><path d="M12 6l-6 6 6 6M19 6l-6 6 6 6"/></svg></button><button id="pm"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><span id="ym"></span><button id="nm"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button><button id="ny"><svg viewBox="0 0 24 24"><path d="M5 6l6 6-6 6M12 6l6 6-6 6"/></svg></button></div><button class="td" id="td">오늘</button></div><div class="cal" id="cal"></div>${btns()}`;
   const mv=m=>()=>{cmo=mk(cmo.getFullYear(),cmo.getMonth()+m,1);draw()};$('#pm').onclick=mv(-1);$('#nm').onclick=mv(1);$('#py').onclick=mv(-12);$('#ny').onclick=mv(12);$('#td').onclick=()=>{cmo=mk(2026,8,1);draw()};
-  $('#bc').onclick=()=>{view='main';render()};$('#bo').onclick=()=>{draft.per={key:pk,from:a,to:b||a};view='main';render()};draw()}}
+  $('#bc').onclick=()=>{if(NOAI)return closeSheet();view='main';render()};$('#bo').onclick=()=>{draft.per={key:pk,from:a,to:b||a};if(NOAI){S.per={...draft.per};paintCard();return closeSheet()}view='main';render()};draw()}}
 $('#setCard').onclick=openSheet;$('#dim').onclick=closeSheet;
 let open=!NOAI;function paintFold(){$('#days').style.display=open?'':'none';$('#fold').firstChild.textContent=open?'일별 목록 접기':'일별 목록 보기';$('#fa').classList.toggle('dn',!open)}
 paintFold();$('#fold').onclick=()=>{open=!open;paintFold();return;$('#days').style.display=open?'':'none';$('#fold').firstChild.textContent=open?'일별 목록 접기':'일별 목록 펼치기';$('#fa').innerHTML=open?'<path d="M6 15l6-6 6 6"/>':'<path d="M6 9l6 6 6-6"/>'};
