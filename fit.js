@@ -16,7 +16,7 @@
     if(!dir)return;
     var st=document.createElement('style');
     st.textContent='@keyframes ucInFwd{from{transform:translateX(100%)}to{transform:none}}@keyframes ucInBack{from{transform:translateX(-30%);opacity:.3}to{transform:none;opacity:1}}'+
-      '.uc-in-fwd>*:not(.dim):not(.sheet):not(.toast):not(.home){animation:ucInFwd .3s cubic-bezier(.22,.8,.24,1) both}.uc-in-back>*:not(.dim):not(.sheet):not(.toast):not(.home){animation:ucInBack .3s cubic-bezier(.22,.8,.24,1) both}';
+      '.uc-in-fwd>*:not(.dim):not(.sheet):not(.toast):not(.home){animation:ucInFwd .3s cubic-bezier(.22,.8,.24,1) backwards}.uc-in-back>*:not(.dim):not(.sheet):not(.toast):not(.home){animation:ucInBack .3s cubic-bezier(.22,.8,.24,1) backwards}';
     document.head.appendChild(st);
     var ph=document.querySelector('.phone');if(ph)ph.classList.add('uc-in-'+dir);
   })();
