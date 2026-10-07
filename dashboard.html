@@ -191,7 +191,7 @@ document.querySelectorAll('.chart .g').forEach((g,i)=>g.onclick=e=>{e.stopPropag
  tip.hidden=false;const w=tip.offsetWidth;tip.style.left=Math.max(-16,Math.min(ch.clientWidth-w+16,g.offsetLeft+g.offsetWidth/2-w/2))+'px'});
 document.addEventListener('click',e=>{if(!e.target.closest('#tip'))$('#tip').hidden=true});
 $('#info').onclick=e=>{e.stopPropagation();$('#help').hidden=!$('#help').hidden;$('#tip').hidden=true};document.addEventListener('click',e=>{if(!e.target.closest('#help'))$('#help').hidden=true});
-if(NOAI){$('#brief').remove();$('#dept').remove();$('#scope').innerHTML='영업 1부 <i style="font-style:normal;color:#ccc;margin:0 4px">|</i> 김사원(본인)';$('#period').textContent='오늘 (2026.09.16)';$('#help').hidden=false}
+if(NOAI){$('#brief').remove();$('#dept').remove();$('#scope').innerHTML='영업 1부 <i style="font-style:normal;color:#ccc;margin:0 4px">|</i> 김사원(본인)';$('#period').textContent='오늘 (2026.09.16)'}
 
 // ===== 조회 설정 =====
 const D0=new Date(2026,8,16);
