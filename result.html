@@ -34,6 +34,7 @@ mark{background:none;color:var(--pri)}
 .home{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#000;z-index:30}
 .toast{position:absolute;left:50%;bottom:60px;transform:translateX(-50%);background:rgba(26,29,35,.92);color:#fff;font-size:13px;padding:11px 16px;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;z-index:40;white-space:nowrap}.toast.show{opacity:1}
 .chev{width:14px;height:14px;color:#777;flex:none;margin-left:4px}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:calc(100% - 48px);min-height:360px}.empty svg{width:96px;height:96px;fill:none}.empty p{margin-top:12px;font-size:15px;color:#777;line-height:21px}
 </style></head><body>
 <div class="phone">
 <div class="status"><span>9:41</span><span>●●● 100%</span></div>
@@ -76,7 +77,13 @@ const D=[
  ['수금','RCV2026083100007','수금<i>|</i>2026-09-01<i>|</i>대한{q}포장(주)',null,null,'타 담당·상세 제한']]]];
 const total=999,cats=[['전체',total],['거래처·구매처',5],['품목',1],['전표',99]];
 let cur='전체';
+const HITS=['스마트','(주)','상사','프린터','토너','포장','ptx','pay','rcv','v1001','a10'];
+const EMPTY=!HITS.some(k=>q.toLowerCase().includes(k));
+function drawEmpty(){$('#tabs').hidden=true;$('#filter').hidden=true;
+ $('#body').innerHTML=`<div class="total" style="margin-bottom:0">검색결과 총 <b>0</b>건</div><div class="empty"><svg viewBox="0 0 48 48"><rect x="8" y="5" width="25" height="33" rx="3" fill="#fff" stroke="#b5b5b5" stroke-width="2"/><g stroke="#d4d4d4" stroke-width="2.4" stroke-linecap="round"><path d="M16 14h12M16 20h12M16 26h8"/></g><circle cx="22" cy="13.5" r="0"/><circle cx="31" cy="30" r="9" fill="#fff" stroke="#a9a9a9" stroke-width="3"/><path d="M38 37l7 7" stroke="#a9a9a9" stroke-width="4" stroke-linecap="round"/></svg><p>검색결과가 없습니다.<br>검색어를 다시 확인해주세요.</p></div>`;
+ $('#body').style.background='#f3f4f9';try{if(parent!==window)parent.postMessage({specPage:4},'*')}catch(e){}}
 function draw(){
+ if(EMPTY)return drawEmpty();
  $('#tabs').innerHTML=cats.map(([n,c])=>`<button class="tab ${cur===n?'on':''}" data-n="${n}">${n} ${c}</button>`).join('');
  $('#tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{cur=b.dataset.n;draw();$('#body').scrollTop=0;try{if(parent!==window)parent.postMessage({specPage:cur==='전체'?2:3},'*')}catch(e){}});
  const list=D.filter(d=>cur==='전체'||d[0]===cur);const cnt=cats.find(c=>c[0]===cur)[1];
@@ -84,4 +91,4 @@ function draw(){
  list.map(([n,c,arrow,rows])=>`<div class="card"><div class="card-h"><span>${n}<b>${c}</b></span>${arrow?'<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>':''}</div><div style="padding:6px 0">${rows.map(r=>it(...r)).join('')}</div></div>`).join('');
  $('#body').querySelectorAll('.it').forEach(e=>e.onclick=()=>{if(e.dataset.t==='(주){q}상사'||e.dataset.t==='(주)ABC {q} 상사'){const u=new URLSearchParams(location.search);u.set('t',e.dataset.t==='(주)ABC {q} 상사'?'r':'p');location.href='vendor.html?'+u.toString()}else if(e.dataset.a==='1'&&e.dataset.t==='PTX2026090100001'||e.dataset.a==='1'&&e.dataset.t==='PAY2026083100007'&&e.dataset.b==='지급'){const u=new URLSearchParams(location.search);u.set('k',e.dataset.b==='지급'?'pay':'in');location.href='slip.html?'+u.toString()}else if(e.dataset.b==='품목'){const u=new URLSearchParams(location.search);u.set('n',e.dataset.t.replace(/\{q\}/g,q));location.href='item.html?'+u.toString()}else toast(`"${e.dataset.t}" 상세 화면으로 이동 (다음 단계)`)})}
 draw();
-</script><script>try{if(parent!==window)parent.postMessage({specPage:2},"*")}catch(e){}</script><script src="comments.js"></script><script src="fit.js"></script></body></html>
+</script><script>try{if(parent!==window)parent.postMessage({specPage:EMPTY?4:2},"*")}catch(e){}</script><script src="comments.js"></script><script src="fit.js"></script></body></html>
