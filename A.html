@@ -64,7 +64,7 @@ body{gap:28px}.spec{width:320px;flex:none;align-self:center;padding:16px;backgro
 <div class="phone">
 <div class="status"><span>9:41</span><span>●●● 100%</span></div>
 <div class="bar">
- <button class="back" onclick="toast('이전 화면으로')"><svg viewBox="0 0 24 24"><path d="M20 12H4M10 5l-7 7 7 7"/></svg></button>
+ <button class="back" onclick="goDash()"><svg viewBox="0 0 24 24"><path d="M20 12H4M10 5l-7 7 7 7"/></svg></button>
  <div class="field"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" placeholder="거래처, 품목, 전표번호를 검색" enterkeyhint="search" autocomplete="off"><button class="xbtn" id="clear" hidden><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
  <button class="fbtn" id="filter" aria-label="상세검색 필터"><svg viewBox="0 0 24 24"><path d="M4 8h9M17 8h3M4 16h3M11 16h9"/><circle cx="15" cy="8" r="2"/><circle cx="9" cy="16" r="2"/></svg></button>
 </div>
@@ -96,6 +96,7 @@ body{gap:28px}.spec{width:320px;flex:none;align-self:center;padding:16px;backgro
 <script>
 const $=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0'),f=d=>`${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())}`,key=d=>d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
 const D=(y,m,d)=>new Date(y,m,d);const now=new Date(),T=D(now.getFullYear(),now.getMonth(),now.getDate());
+function goDash(){if(parent!==window)parent.postMessage({gotoMenu:'dash'},'*');else location.href='dashboard.html'}
 function toast(m){const t=$('.toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2000)}
 // recent
 const store={get:()=>{try{return JSON.parse(sessionStorage.getItem('recentA2')||'["스마트A10 프린터","미지급 상위 구매처","오늘 입고 전표","토너 구매 수량"]')}catch(e){return[]}},set:v=>{try{sessionStorage.setItem('recentA2',JSON.stringify(v))}catch(e){}}};

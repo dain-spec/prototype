@@ -22,7 +22,8 @@ body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;backg
 .stage{flex:1;position:relative;min-width:0;height:calc(100% - 40px)}
 .note{position:fixed;left:480px;right:0;bottom:0;height:40px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#5c6370;letter-spacing:-.02em;padding:0 16px;text-align:center}
 #fit{position:absolute;left:50%;top:24px;display:flex;align-items:flex-start;gap:24px;transform-origin:top center}
-.col{width:400px}.swap{display:block;margin:12px auto 0;font:600 13px Pretendard,sans-serif;color:#105aff;background:#fff;border:1px solid #c9d6f5;border-radius:16px;padding:8px 16px;cursor:pointer;text-decoration:underline}.col[hidden]{display:none}.col h2{height:44px;font-size:15px;font-weight:700;color:#333;text-align:center;line-height:20px}
+.col{width:400px}.tg{display:flex;justify-content:center;gap:8px;margin-top:12px}.tg[hidden]{display:none}.sw{display:flex;align-items:center;gap:8px;font:600 13px Pretendard,sans-serif;color:#5c6370;background:#fff;border:1px solid #c9d6f5;border-radius:20px;padding:7px 14px 7px 8px;cursor:pointer}.sw i{position:relative;width:34px;height:20px;border-radius:10px;background:#c9ced8;transition:.2s;flex:none}.sw i:after{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:8px;background:#fff;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.25)}.sw[aria-checked=true]{color:#105aff;border-color:#105aff}.sw[aria-checked=true] i{background:#105aff}.sw[aria-checked=true] i:after{left:16px}
+.swap{display:block;margin:12px auto 0;font:600 13px Pretendard,sans-serif;color:#105aff;background:#fff;border:1px solid #c9d6f5;border-radius:16px;padding:8px 16px;cursor:pointer;text-decoration:underline}.col[hidden]{display:none}.col h2{height:44px;font-size:15px;font-weight:700;color:#333;text-align:center;line-height:20px}
 .col h2 span{display:block;font-size:12px;font-weight:500;color:#5c6370;margin-top:2px}
 iframe{display:block;border:0;width:400px;height:850px;background:transparent}
 .reset{font-size:12px;color:#5c6370;background:#f3f4f7;border:0;padding:7px 12px;border-radius:8px;cursor:pointer;font-family:inherit}
@@ -35,7 +36,7 @@ iframe{display:block;border:0;width:400px;height:850px;background:transparent}
 <button class="zoom" id="zoom">크게 보기</button></aside>
 <div class="lb" id="lb"><img id="limg" alt=""></div>
 <main class="stage"><div id="fit">
- <div class="col"><iframe id="proto" src="dashboard.html?nospec" title="프로토타입"></iframe><button class="swap" id="swap" type="button">검색필드에서 조회조건 설정</button><button class="swap" id="swap2" type="button" style="margin-top:8px">탭이 없는 Case 보기</button></div>
+ <div class="col"><iframe id="proto" src="dashboard.html?nospec" title="프로토타입"></iframe><button class="swap" id="swap" type="button">검색필드에서 조회조건 설정</button><div class="tg" id="tg" hidden><button type="button" class="sw" id="tgAi" role="switch" aria-checked="false"><i></i>AI 미배포 Case</button><button type="button" class="sw" id="tgTab" role="switch" aria-checked="false"><i></i>탭이 없는 Case</button></div></div>
  </div></main>
 </div>
 <footer class="note">*본 프로토타입은 참고용으로 제작된 것으로 최종 디자인 산출물이 아니며, 최종 산출물은 피그마 파일을 확인해 주세요.</footer>
@@ -46,16 +47,17 @@ addEventListener('resize',go);go();
 document.getElementById('reset').onclick=()=>proto.contentWindow.location.reload();
 
 const proto=document.getElementById('proto'),swap=document.getElementById('swap');let isB=false;
-let mode='dash';let noAi=false,noTabs=false;const swap2=document.getElementById('swap2');
+let mode='dash';let noAi=false,noTabs=false;const tg=document.getElementById('tg'),tgAi=document.getElementById('tgAi'),tgTab=document.getElementById('tgTab');
 const MENU={dash:()=>'dashboard.html?nospec'+(noAi?'&case=noai':'')+(noTabs?'&tabs=none':''),deliv:()=>'placeholder.html?t='+encodeURIComponent('출고예정납기현황')+'&nospec'};
 const NAME={dash:'대시보드',deliv:'출고예정납기현황'};
-const SWAPT={search:()=>isB?'필터 아이콘에서 조회조건 설정':'검색필드에서 조회조건 설정',dash:()=>noAi?'AI 배포 Case 보기':'AI 미배포 Case 보기'};
+const SWAPT={search:()=>isB?'필터 아이콘에서 조회조건 설정':'검색필드에서 조회조건 설정'};
 function srcFor(){return mode==='search'?(isB?'B.html':'A.html')+'?nospec':MENU[mode]()}
-function paintSwap(){swap.style.display=SWAPT[mode]?'':'none';if(SWAPT[mode])swap.textContent=SWAPT[mode]();swap2.style.display=mode==='dash'?'':'none';swap2.textContent=noTabs?'탭이 있는 Case 보기':'탭이 없는 Case 보기'}
+function paintSwap(){swap.style.display=SWAPT[mode]?'':'none';if(SWAPT[mode])swap.textContent=SWAPT[mode]();tg.hidden=mode!=='dash';tgAi.setAttribute('aria-checked',noAi);tgTab.setAttribute('aria-checked',noTabs)}
 document.querySelectorAll('#menu button').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('#menu button').forEach(x=>x.classList.toggle('on',x===b));
  paintSwap();proto.src=srcFor();go();setSpec()});
-swap.onclick=()=>{if(mode==='search')isB=!isB;else if(mode==='dash')noAi=!noAi;paintSwap();proto.src=srcFor();go()};
-swap2.onclick=()=>{noTabs=!noTabs;paintSwap();proto.src=srcFor();go()};
+swap.onclick=()=>{if(mode==='search')isB=!isB;paintSwap();proto.src=srcFor();go()};
+tgAi.onclick=()=>{noAi=!noAi;paintSwap();proto.src=srcFor();go()};
+tgTab.onclick=()=>{noTabs=!noTabs;paintSwap();proto.src=srcFor();go()};
 </script><script>
 const SPECS={
  search:{dir:'spec',title:'SmartA10 모바일 통합검색 디자인요청',pages:['첫 화면','검색 결과','탭·유형 전체','예외 상태','품목 이동','거래처·구매처 상세','원전표','상태별 노출','표시 자릿수']},

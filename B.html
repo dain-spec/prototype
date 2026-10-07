@@ -100,6 +100,7 @@ body{gap:28px}.spec{width:320px;flex:none;align-self:center;padding:16px;backgro
 <script>
 const $=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0'),f=d=>`${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())}`,key=d=>d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
 const D=(y,m,d)=>new Date(y,m,d);const now=new Date(),T=D(now.getFullYear(),now.getMonth(),now.getDate());
+function goDash(){if(parent!==window)parent.postMessage({gotoMenu:'dash'},'*');else location.href='dashboard.html'}
 function toast(m){const t=$('.toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2000)}
 // recent
 const store={get:()=>{try{return JSON.parse(sessionStorage.getItem('recentA2')||'["스마트A10 프린터","미지급 상위 구매처","오늘 입고 전표","토너 구매 수량"]')}catch(e){return[]}},set:v=>{try{sessionStorage.setItem('recentA2',JSON.stringify(v))}catch(e){}}};
@@ -123,7 +124,7 @@ const P={'이번주':()=>[weekStart(),D(T.getFullYear(),T.getMonth(),weekStart()
 function initPeriod(){const p=period||{from:T,to:T,preset:'직접입력'};from=p.from;to=p.to;preset=p.preset||'직접입력';view=D(from.getFullYear(),from.getMonth(),1);draw()}
 let skip=false;function enterFocus(){if(skip||!$('#idle').hidden===false)return;$('#idle').hidden=true;$('#active').hidden=false;$('.field').classList.add('focus');$('#pchip').style.display='none';initPeriod()}
 function exitFocus(keep){$('#idle').hidden=false;$('#active').hidden=true;$('.field').classList.remove('focus');$('#pchip').style.display='';$('#q').blur();if(!keep){$('#q').value='';period=null}syncBar()}
-$('#q').onfocus=enterFocus;$('#dimarea').onclick=()=>exitFocus(true);$('.back').onclick=()=>{if($('#idle').hidden)exitFocus(true);else toast('이전 화면으로')};$('#apply').onclick=()=>{if(!to)to=from;period={from,to,preset};exitFocus(true);skip=true;$('#q').focus();skip=false;if($('#q').value.trim().length>=2)go($('#q').value)};
+$('#q').onfocus=enterFocus;$('#dimarea').onclick=()=>exitFocus(true);$('.back').onclick=()=>{if($('#idle').hidden)exitFocus(true);else goDash()};$('#apply').onclick=()=>{if(!to)to=from;period={from,to,preset};exitFocus(true);skip=true;$('#q').focus();skip=false;if($('#q').value.trim().length>=2)go($('#q').value)};
 function draw(){
  $('#presets').innerHTML=['이번주','이번달','올해'].map(n=>`<button class="${preset===n?'sel':''}" data-n="${n}">${n}</button>`).join('')+`<button class="direct" style="${preset==='직접입력'?'':'font-weight:500;color:var(--t2)'}" data-n="직접입력">직접입력</button>`;
  $('#presets').querySelectorAll('button').forEach(b=>b.onclick=()=>{const n=b.dataset.n;preset=n;if(P[n]){[from,to]=P[n]();view=D(from.getFullYear(),from.getMonth(),1)}draw()});
