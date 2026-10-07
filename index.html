@@ -27,7 +27,7 @@ body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;backg
 iframe{display:block;border:0;width:400px;height:850px;background:transparent}
 .reset{font-size:12px;color:#5c6370;background:#f3f4f7;border:0;padding:7px 12px;border-radius:8px;cursor:pointer;font-family:inherit}
 </style></head><body>
-<header class="hdr"><span class="logo">SmartA10 물류관리 모바일</span><nav class="hnav" id="menu"><button data-m="dash">대시보드</button><button data-m="search" class="on">통합검색</button><button data-m="deliv">출고예정납기현황</button></nav><span class="sp"></span><button class="reset" id="reset">처음부터 다시</button></header>
+<header class="hdr"><span class="logo">SmartA10 물류관리 모바일</span><nav class="hnav" id="menu"><button data-m="dash" class="on">대시보드</button><button data-m="search">통합검색</button><button data-m="deliv">출고예정납기현황</button></nav><span class="sp"></span><button class="reset" id="reset">처음부터 다시</button></header>
 <div class="wrap">
 <aside class="specpane"><h2><span>설계서 <small id="stitle" style="font-weight:500;color:#5b6f9f">SmartA10 모바일 통합검색 디자인요청</small></span></h2>
 <div class="pg" id="pg"></div><div class="match-note" id="mn"></div>
@@ -35,7 +35,7 @@ iframe{display:block;border:0;width:400px;height:850px;background:transparent}
 <button class="zoom" id="zoom">크게 보기</button></aside>
 <div class="lb" id="lb"><img id="limg" alt=""></div>
 <main class="stage"><div id="fit">
- <div class="col"><iframe id="proto" src="A.html?nospec" title="프로토타입"></iframe><button class="swap" id="swap" type="button">검색필드에서 조회조건 설정</button></div>
+ <div class="col"><iframe id="proto" src="dashboard.html?nospec" title="프로토타입"></iframe><button class="swap" id="swap" type="button">검색필드에서 조회조건 설정</button></div>
  </div></main>
 </div>
 <footer class="note">*본 프로토타입은 참고용으로 제작된 것으로 최종 디자인 산출물이 아니며, 최종 산출물은 피그마 파일을 확인해 주세요.</footer>
@@ -46,7 +46,7 @@ addEventListener('resize',go);go();
 document.getElementById('reset').onclick=()=>proto.contentWindow.location.reload();
 
 const proto=document.getElementById('proto'),swap=document.getElementById('swap');let isB=false;
-let mode='search';let noAi=false;
+let mode='dash';let noAi=false;
 const MENU={dash:()=>'dashboard.html'+(noAi?'?case=noai&nospec':'?nospec'),deliv:()=>'placeholder.html?t='+encodeURIComponent('출고예정납기현황')+'&nospec'};
 const NAME={dash:'대시보드',deliv:'출고예정납기현황'};
 const SWAPT={search:()=>isB?'필터 아이콘에서 조회조건 설정':'검색필드에서 조회조건 설정',dash:()=>noAi?'AI 배포 Case 보기':'AI 미배포 Case 보기'};
@@ -73,5 +73,5 @@ addEventListener('message',e=>{const d=e.data;if(d&&d.specPage)showPage(d.specPa
 const openLb=()=>{document.getElementById('limg').src=simg.src;document.getElementById('lb').classList.add('show')};
 document.getElementById('zoom').onclick=openLb;simg.onclick=openLb;
 document.getElementById('lb').onclick=()=>document.getElementById('lb').classList.remove('show');
-showPage(1,true);
+setSpec();paintSwap();
 </script><script src="comments.js"></script></body></html>
