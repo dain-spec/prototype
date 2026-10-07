@@ -46,12 +46,15 @@ addEventListener('resize',go);go();
 document.getElementById('reset').onclick=()=>proto.contentWindow.location.reload();
 
 const proto=document.getElementById('proto'),swap=document.getElementById('swap');let isB=false;
-let mode='search';
-const MENU={dash:'dashboard.html?nospec',deliv:'placeholder.html?t='+encodeURIComponent('출고예정납기현황')+'&nospec'};
+let mode='search';let noAi=false;
+const MENU={dash:()=>'dashboard.html'+(noAi?'?case=noai&nospec':'?nospec'),deliv:()=>'placeholder.html?t='+encodeURIComponent('출고예정납기현황')+'&nospec'};
 const NAME={dash:'대시보드',deliv:'출고예정납기현황'};
+const SWAPT={search:()=>isB?'필터 아이콘에서 조회조건 설정':'검색필드에서 조회조건 설정',dash:()=>noAi?'AI 배포 Case 보기':'AI 미배포 Case 보기'};
+function srcFor(){return mode==='search'?(isB?'B.html':'A.html')+'?nospec':MENU[mode]()}
+function paintSwap(){swap.style.display=SWAPT[mode]?'':'none';if(SWAPT[mode])swap.textContent=SWAPT[mode]()}
 document.querySelectorAll('#menu button').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('#menu button').forEach(x=>x.classList.toggle('on',x===b));
- swap.style.display=mode==='search'?'':'none';proto.src=mode==='search'?(isB?'B.html':'A.html')+'?nospec':MENU[mode];go();setSpec()});
-swap.onclick=()=>{isB=!isB;proto.src=(isB?'B.html':'A.html')+'?nospec';swap.textContent=isB?'필터 아이콘에서 조회조건 설정':'검색필드에서 조회조건 설정';go()};
+ paintSwap();proto.src=srcFor();go();setSpec()});
+swap.onclick=()=>{if(mode==='search')isB=!isB;else if(mode==='dash')noAi=!noAi;paintSwap();proto.src=srcFor();go()};
 </script><script>
 const SPECS={
  search:{dir:'spec',title:'SmartA10 모바일 통합검색 디자인요청',pages:['첫 화면','검색 결과','탭·유형 전체','예외 상태','품목 이동','거래처·구매처 상세','원전표','상태별 노출','표시 자릿수']},

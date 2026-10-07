@@ -31,7 +31,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
 .k{padding:16px}.k .t{font-size:14px;font-weight:500;color:var(--pri)}.k .v{font-size:18px;font-weight:700;margin:8px 0}
 .k .r{display:flex;justify-content:space-between;font-size:13px;color:var(--t2);line-height:20px}.k .r b{font-size:14px;font-weight:500;color:var(--t1)}
 .k .r2{display:flex;justify-content:space-between;font-size:13px;color:var(--t2);margin-top:10px}.k .r2 b{font-size:14px;font-weight:500;color:var(--t1)}
-.flow{margin-top:8px;padding:20px 16px 16px}.flow h3{font-size:17px;font-weight:700;display:flex;align-items:center;gap:4px}.flow h3 svg{width:16px;height:16px;color:#777}
+.flow{margin-top:8px;padding:20px 16px 16px;position:relative}.help{position:absolute;left:12px;right:12px;top:52px;z-index:4;background:#fff;border:1px solid #e1e1e1;border-radius:8px;padding:12px;box-shadow:0 4px 16px rgba(0,0,0,.12);font-size:13px;line-height:1.55;color:#333}.help p+p{margin-top:6px}.help b{font-weight:700}.flow h3{font-size:17px;font-weight:700;display:flex;align-items:center;gap:4px}.flow h3 svg{width:16px;height:16px;color:#777}
 .dnav{display:flex;align-items:center;justify-content:center;gap:24px;margin:12px 0 8px;font-size:16px;font-weight:700}.dnav svg{width:16px;height:16px}
 .chart{position:relative;height:150px;margin:0 8px}
 .chart .bars{position:absolute;inset:0 0 24px;display:flex;align-items:flex-end;justify-content:space-around}
@@ -62,14 +62,15 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
 <div class="tabs"><button class="tab on">대시보드</button><button class="tab" data-t="영업">영업</button><button class="tab" data-t="구매">구매</button><button class="tab" data-t="재고">재고</button><button class="tab" data-t="채권·채무">채권·채무</button><button class="tab" data-t="실적">실적</button></div>
 <div class="scroll" id="sc">
  <div class="card set" data-t="조회 설정">
-  <div><h3>조회 설정<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></h3><div class="seg"><b>범위</b>회사 전체</div><div class="seg"><b>기간</b>2026.09.14 ~ 2026.09.16</div></div>
+  <div><h3>조회 설정<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></h3><div class="seg"><b>범위</b><span id="scope">회사 전체</span></div><div class="seg"><b>기간</b><span id="period">2026.09.14 ~ 2026.09.16</span></div></div>
   <svg class="box3d" viewBox="0 0 76 64"><path d="M38 6l28 12v24L38 54 10 42V18z" fill="#4c8bff" stroke="none"/><path d="M38 6l28 12-28 12L10 18z" fill="#8bb6ff" stroke="none"/><path d="M38 30v24L10 42V18z" fill="#2f6ff0" stroke="none"/><path d="M26 22l12 5" stroke="#fff" stroke-width="2"/></svg>
  </div>
- <div class="sec-t"><span class="ai"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.3L21 10l-6.8 1.7L12 18l-2.2-6.3L3 10l6.8-1.7z"/></svg>브리핑이 도착했어요!</span><span class="s" data-t="전체보기">전체보기</span></div>
+ <div id="brief"><div class="sec-t"><span class="ai"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.3L21 10l-6.8 1.7L12 18l-2.2-6.3L3 10l6.8-1.7z"/></svg>브리핑이 도착했어요!</span><span class="s" data-t="전체보기">전체보기</span></div>
  <div class="cards">
   <div class="card bc"><div class="ic" style="background:#ffe8ea"><svg viewBox="0 0 24 24" style="stroke:#fa4553"><path d="M6 18v-5a6 6 0 0 1 12 0v5M4 18h16M12 4V2"/></svg></div><div><small>납기일이 지난 출고 문서</small><strong>납기 지연 <em>3건</em>을<br>찾았어요!</strong></div><button data-t="처리 안내 보기">처리 안내 보기</button></div>
   <div class="card bc"><div class="ic" style="background:#e1ebfe"><svg viewBox="0 0 24 24" style="stroke:#105aff"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 10h16"/></svg></div><div><small>예정 출고를 채우지 못할 품목</small><strong>재고 부족 예상 <em>12개</em>를<br>찾았어요!</strong></div><button data-t="재고 부족 현황 보기">재고 부족 현황 보기</button></div>
   <div class="card bc"><div class="ic" style="background:#e9f9f1"><svg viewBox="0 0 24 24" style="stroke:#27c36f"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9 11h6"/></svg></div><div><small>수금 예정일이 오늘인 거래처</small><strong>오늘 수금 예정 <em>5건</em>을<br>찾았어요!</strong></div><button data-t="수금 예정 현황 보기">수금 예정 현황 보기</button></div>
+ </div>
  </div>
  <div class="card list">
   <div class="lr" data-t="기간 내 납기"><span>기간 내 납기</span><b>12건<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></b></div>
@@ -86,7 +87,8 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
   <div class="card k"><div class="t">실적</div><div class="v">-999,999,999원</div><div class="r2"><span>이익 · 이익률</span></div></div>
  </div>
  <div class="card flow">
-  <h3>선택기간 업무 흐름<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg></h3>
+  <h3>선택기간 업무 흐름<button id="info" aria-label="설명" style="width:16px;height:16px;display:grid;place-items:center"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg></button></h3>
+  <div class="help" id="help" hidden><p><b>구간</b> : 상단 조회 기간을 그대로 따릅니다.<br>3일 미만이면 3일로 넓히고, 62일을 넘으면<br>월 단위로 묶어 봅니다.</p><p><b>읽는 법</b> : 그래프에서 날짜를 누르거나<br>값 표시 줄 옆의 ‹ › 로 한 칸씩 옮기면 그 날짜의<br>수량과 금액이 함께 표시됩니다. 기간의 끝에서<br>한 번 더 누르면 어제 ↔ 오늘, 지난주 ↔ 이번주,<br>저번달 ↔ 이번달로 넘어갑니다.</p><p><b>수량은 선, 금액은 막대</b>로 그리며 단위가 달라 축을<br>따로 잡습니다. 선과 막대의 높이는 서로 비교하지<br>않습니다.</p><p><b>금액</b>은 공급가액 기준이고, 출고 현황 · 입고 현황과<br>같은 자료를 집계한 값입니다.</p></div>
   <div class="dnav"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>2026.09.16<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div>
   <div class="chart"><div class="tip"><b>2026.09.16</b><div><span>출고</span><i>5건</i><strong>1,540,000원</strong></div><div><span>입고</span><i>5건</i><strong>1,540,000원</strong></div></div>
    <div class="bars"><div class="g"><i class="o" style="height:62%"></i><i class="i" style="height:70%"></i></div><div class="g"><i class="o" style="height:55%"></i><i class="i" style="height:66%"></i></div><div class="g sel"><i class="o" style="height:34%"></i><i class="i" style="height:44%"></i></div></div>
@@ -100,7 +102,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-l
   </div>
   <button class="fold" id="fold">일별 목록 접기<svg viewBox="0 0 24 24" id="fa"><path d="M6 15l6-6 6 6"/></svg></button>
  </div>
- <div class="card dept">
+ <div class="card dept" id="dept">
   <div class="h"><span>부서별 실적</span><small>출고 공급가액 | 오늘</small></div>
   <div class="dr2 sum"><div><div class="n">합계<span class="bd">부서 99곳</span></div><div class="s">출고 9,999건 | 입고 9,999건</div></div><div class="a">999,999,999원</div></div>
   <div class="dr2"><div><div class="n">영업1부<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div><div class="s">출고 9,999건 | 입고 9,999건</div></div><div class="a">999,999,999원</div></div>
@@ -115,6 +117,10 @@ const $=s=>document.querySelector(s);
 function toast(m){const t=$('.toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2000)}
 document.querySelectorAll('[data-t]').forEach(e=>e.onclick=()=>toast(e.dataset.t+' (다음 단계)'));
 $('#goSearch').onclick=()=>{if(parent!==window)parent.postMessage({gotoMenu:'search'},'*');else location.href='A.html'};
-let open=true;$('#fold').onclick=()=>{open=!open;$('#days').style.display=open?'':'none';$('#fold').firstChild.textContent=open?'일별 목록 접기':'일별 목록 펼치기';$('#fa').innerHTML=open?'<path d="M6 15l6-6 6 6"/>':'<path d="M6 9l6 6 6-6"/>'};
-try{if(parent!==window)parent.postMessage({specPage:1},'*')}catch(e){}
+const P=new URLSearchParams(location.search),NOAI=P.get('case')==='noai';
+$('#info').onclick=e=>{e.stopPropagation();$('#help').hidden=!$('#help').hidden};document.addEventListener('click',e=>{if(!e.target.closest('#help'))$('#help').hidden=true});
+if(NOAI){$('#brief').remove();$('#dept').remove();$('#scope').innerHTML='영업 1부 <i style="font-style:normal;color:#ccc;margin:0 4px">|</i> 김사원(본인)';$('#period').textContent='오늘 (2026.09.16)';$('#help').hidden=false}
+let open=!NOAI;function paintFold(){$('#days').style.display=open?'':'none';$('#fold').firstChild.textContent=open?'일별 목록 접기':'일별 목록 보기';$('#fa').innerHTML=open?'<path d="M6 15l6-6 6 6"/>':'<path d="M6 9l6 6 6-6"/>'}
+paintFold();$('#fold').onclick=()=>{open=!open;paintFold();return;$('#days').style.display=open?'':'none';$('#fold').firstChild.textContent=open?'일별 목록 접기':'일별 목록 펼치기';$('#fa').innerHTML=open?'<path d="M6 15l6-6 6 6"/>':'<path d="M6 9l6 6 6-6"/>'};
+try{if(parent!==window)parent.postMessage({specPage:NOAI?5:1},'*')}catch(e){}
 </script><script src="comments.js"></script><script src="fit.js"></script></body></html>
