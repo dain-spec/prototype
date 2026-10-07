@@ -1,0 +1,120 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>물류관리 대시보드</title>
+<style>
+:root{--pri:#105aff;--t1:#333;--t2:#777;--line:#ededed;--bg:#f5f6fa}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;background:#d9dce2;display:flex;justify-content:center;align-items:center;min-height:100vh;color:var(--t1);letter-spacing:-.02em}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.phone{width:375px;height:812px;background:#fff;position:relative;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08);border-radius:32px;display:flex;flex-direction:column}
+.status{height:44px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:0 28px;font-size:15px;font-weight:600}
+.bar{height:48px;flex:none;display:flex;align-items:center;gap:8px;padding:0 16px}.bar .back{width:24px;height:24px}.bar .back svg{width:24px;height:24px;stroke-width:1.8}
+.bar h2{font-size:18px;font-weight:700;flex:1}.bar .ic{width:24px;height:24px;margin-left:12px}.bar .ic svg{width:24px;height:24px}
+.tabs{display:flex;gap:20px;padding:0 16px;height:44px;flex:none;border-bottom:1px solid var(--line);overflow-x:auto}.tabs::-webkit-scrollbar{display:none}
+.tab{position:relative;font-size:16px;color:var(--t2);white-space:nowrap;height:100%}.tab.on{font-weight:700;color:var(--pri)}.tab.on:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--pri)}
+.scroll{flex:1;overflow-y:auto;min-height:0;background:var(--bg);padding:16px 16px 110px}.scroll::-webkit-scrollbar{display:none}
+.card{background:#fff;border-radius:16px;border:1px solid var(--line)}
+.set{background:#e1ebfe;border:0;padding:16px;display:flex;justify-content:space-between;align-items:flex-start;position:relative;min-height:104px}
+.set h3{font-size:16px;font-weight:700;display:flex;align-items:center;gap:2px;margin-bottom:8px}.set h3 svg{width:14px;height:14px}
+.seg{display:flex;align-items:center;gap:6px;font-size:15px;line-height:24px;margin-top:4px}.seg b{height:24px;padding:0 4px;border-radius:4px;background:#fff;color:var(--pri);font-size:13px;font-weight:700;line-height:24px}
+.box3d{width:76px;height:64px;position:absolute;right:20px;top:20px}
+.sec-t{display:flex;align-items:center;justify-content:space-between;margin:20px 0 12px;font-size:17px;font-weight:700}.sec-t .s{font-size:13px;font-weight:400;color:var(--t2);display:flex;align-items:center;gap:4px}
+.ai{display:flex;align-items:center;gap:6px;background:linear-gradient(90deg,#6e3eff,#008edb);-webkit-background-clip:text;color:transparent}
+.ai svg{width:18px;height:18px;fill:#6e3eff;stroke:none}
+.cards{display:flex;gap:8px;overflow-x:auto;margin:0 -16px;padding:0 16px}.cards::-webkit-scrollbar{display:none}
+.bc{flex:none;width:200px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.bc .ic{width:32px;height:32px;border-radius:12px;display:grid;place-items:center}.bc .ic svg{width:18px;height:18px}
+.bc small{font-size:13px;color:var(--t2);display:block;margin-bottom:2px}.bc strong{font-size:16px;font-weight:700;line-height:22px;display:block}.bc strong em{font-style:normal;color:var(--pri)}
+.bc button{height:34px;border-radius:8px;background:#e1ebfe;color:var(--pri);font-size:13px;font-weight:700}
+.list{margin-top:16px;padding:8px 16px}
+.lr{display:flex;justify-content:space-between;align-items:center;height:44px;font-size:15px;font-weight:500;color:#555}.lr b{font-size:16px;font-weight:700;color:var(--t1);display:flex;align-items:center;gap:6px}.lr svg{width:14px;height:14px;color:#999}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.k{padding:16px}.k .t{font-size:14px;font-weight:500;color:var(--pri)}.k .v{font-size:18px;font-weight:700;margin:8px 0}
+.k .r{display:flex;justify-content:space-between;font-size:13px;color:var(--t2);line-height:20px}.k .r b{font-size:14px;font-weight:500;color:var(--t1)}
+.k .r2{display:flex;justify-content:space-between;font-size:13px;color:var(--t2);margin-top:10px}.k .r2 b{font-size:14px;font-weight:500;color:var(--t1)}
+.flow{margin-top:8px;padding:20px 16px 16px}.flow h3{font-size:17px;font-weight:700;display:flex;align-items:center;gap:4px}.flow h3 svg{width:16px;height:16px;color:#777}
+.dnav{display:flex;align-items:center;justify-content:center;gap:24px;margin:12px 0 8px;font-size:16px;font-weight:700}.dnav svg{width:16px;height:16px}
+.chart{position:relative;height:150px;margin:0 8px}
+.chart .bars{position:absolute;inset:0 0 24px;display:flex;align-items:flex-end;justify-content:space-around}
+.chart .g{display:flex;gap:2px;align-items:flex-end;height:100%;width:70px;justify-content:center}.chart .g.sel{background:#f4f6fb}
+.chart .g i{display:block;width:14px;border-radius:3px 3px 0 0}.chart .g i.o{background:#b9ccfb}.chart .g i.i{background:#9fdcc2}
+.chart .lbl{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-around;font-size:12px;color:#777}.chart .lbl .s{font-weight:700;color:#333}
+.chart svg.ln{position:absolute;inset:0 0 24px;width:100%;height:calc(100% - 24px)}
+.tip{position:absolute;right:-8px;top:-30px;width:156px;background:#fff;border:1px solid #e1e1e1;border-radius:8px;padding:10px 12px;box-shadow:0 4px 12px rgba(0,0,0,.08);font-size:13px;line-height:20px;z-index:2}
+.tip>b{display:block;font-size:14px;margin-bottom:2px}.tip div{display:flex;gap:6px;white-space:nowrap}.tip i{font-style:normal;color:var(--pri);font-weight:700}.tip strong{font-weight:700}
+.leg{display:flex;justify-content:center;gap:10px;font-size:12px;color:#555;margin:14px 0 8px}.leg span{display:flex;align-items:center;gap:4px}.leg u{display:inline-block;width:14px;height:0;border-top:2px solid var(--pri)}.leg u.d{border-top:2px dashed #27c36f}.leg s{width:9px;height:9px;border-radius:2px;display:inline-block}
+.days{margin-top:8px;border-top:0}.day{padding:8px 0}.day h4{font-size:14px;font-weight:500;line-height:20px;margin:6px 0}.day.empty h4,.day.empty p{color:#999;font-weight:400}
+.dr{display:flex;justify-content:space-between;font-size:14px;line-height:28px;color:#555}.dr .l{display:flex;align-items:center;gap:8px}.dr i{width:8px;height:8px;border-radius:4px;display:inline-block}.dr .r{display:flex;gap:14px}.dr .r b{font-weight:700;color:var(--t1)}
+.fold{width:100%;height:44px;margin-top:12px;border:1px solid #e1e1e1;border-radius:8px;font-size:15px;display:flex;align-items:center;justify-content:center;gap:4px}.fold svg{width:16px;height:16px}
+.dept{margin-top:8px;padding:20px 16px 8px}.dept .h{display:flex;justify-content:space-between;align-items:baseline;font-size:17px;font-weight:700}.dept .h small{font-size:13px;font-weight:400;color:var(--t2)}
+.dr2{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #ededed}.dr2:last-child{border-bottom:0}
+.dr2 .n{font-size:16px;font-weight:500;display:flex;align-items:center;gap:6px}.dr2 .n svg{width:14px;height:14px;color:#999}.dr2 .n .bd{height:20px;padding:0 4px;border-radius:4px;background:#e1ebfe;color:var(--pri);font-size:12px;font-weight:700;line-height:20px}
+.dr2 .s{font-size:14px;color:var(--t2);margin-top:2px}.dr2 .a{font-size:16px;font-weight:700}.dr2.sum .n{font-weight:700}.dr2.sum .a{font-size:18px;color:var(--pri)}
+.gnb{position:absolute;left:16px;right:16px;bottom:20px;height:64px;background:#fff;border:1px solid #ededed;border-radius:32px;box-shadow:0 4px 16px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:space-around;z-index:5}
+.gnb button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;font-weight:500;color:#555;width:96px}.gnb button.on{color:var(--pri);font-weight:700}.gnb svg{width:22px;height:22px}
+.home{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#000;z-index:30}
+.toast{position:absolute;left:50%;bottom:100px;transform:translateX(-50%);background:rgba(26,29,35,.92);color:#fff;font-size:13px;padding:11px 16px;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;z-index:40;white-space:nowrap}.toast.show{opacity:1}
+</style></head><body>
+<div class="phone">
+<div class="status"><span>9:41</span><span>●●● 100%</span></div>
+<div class="bar"><button class="back" data-t="뒤로가기"><svg viewBox="0 0 24 24"><path d="M20 12H4M10 5l-7 7 7 7"/></svg></button><h2>물류관리</h2>
+ <button class="ic" id="goSearch" aria-label="통합검색"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+ <button class="ic" data-t="메뉴"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+<div class="tabs"><button class="tab on">대시보드</button><button class="tab" data-t="영업">영업</button><button class="tab" data-t="구매">구매</button><button class="tab" data-t="재고">재고</button><button class="tab" data-t="채권·채무">채권·채무</button><button class="tab" data-t="실적">실적</button></div>
+<div class="scroll" id="sc">
+ <div class="card set" data-t="조회 설정">
+  <div><h3>조회 설정<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></h3><div class="seg"><b>범위</b>회사 전체</div><div class="seg"><b>기간</b>2026.09.14 ~ 2026.09.16</div></div>
+  <svg class="box3d" viewBox="0 0 76 64"><path d="M38 6l28 12v24L38 54 10 42V18z" fill="#4c8bff" stroke="none"/><path d="M38 6l28 12-28 12L10 18z" fill="#8bb6ff" stroke="none"/><path d="M38 30v24L10 42V18z" fill="#2f6ff0" stroke="none"/><path d="M26 22l12 5" stroke="#fff" stroke-width="2"/></svg>
+ </div>
+ <div class="sec-t"><span class="ai"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.3L21 10l-6.8 1.7L12 18l-2.2-6.3L3 10l6.8-1.7z"/></svg>브리핑이 도착했어요!</span><span class="s" data-t="전체보기">전체보기</span></div>
+ <div class="cards">
+  <div class="card bc"><div class="ic" style="background:#ffe8ea"><svg viewBox="0 0 24 24" style="stroke:#fa4553"><path d="M6 18v-5a6 6 0 0 1 12 0v5M4 18h16M12 4V2"/></svg></div><div><small>납기일이 지난 출고 문서</small><strong>납기 지연 <em>3건</em>을<br>찾았어요!</strong></div><button data-t="처리 안내 보기">처리 안내 보기</button></div>
+  <div class="card bc"><div class="ic" style="background:#e1ebfe"><svg viewBox="0 0 24 24" style="stroke:#105aff"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 10h16"/></svg></div><div><small>예정 출고를 채우지 못할 품목</small><strong>재고 부족 예상 <em>12개</em>를<br>찾았어요!</strong></div><button data-t="재고 부족 현황 보기">재고 부족 현황 보기</button></div>
+  <div class="card bc"><div class="ic" style="background:#e9f9f1"><svg viewBox="0 0 24 24" style="stroke:#27c36f"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9 11h6"/></svg></div><div><small>수금 예정일이 오늘인 거래처</small><strong>오늘 수금 예정 <em>5건</em>을<br>찾았어요!</strong></div><button data-t="수금 예정 현황 보기">수금 예정 현황 보기</button></div>
+ </div>
+ <div class="card list">
+  <div class="lr" data-t="기간 내 납기"><span>기간 내 납기</span><b>12건<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></b></div>
+  <div class="lr" data-t="수금 예정"><span>수금 예정</span><b>999,999,999원<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></b></div>
+  <div class="lr" data-t="지급 예정"><span>지급 예정</span><b>999,999,999원<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></b></div>
+ </div>
+ <div class="sec-t"><span>내 전체 업무</span><span class="s">09:41 기준<svg viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M20 12a8 8 0 1 1-3-6.2M20 4v5h-5"/></svg></span></div>
+ <div class="grid">
+  <div class="card k"><div class="t">영업</div><div class="v">3건 출고</div><div class="r"><span>수량</span><b>99,999개</b></div><div class="r"><span>합계</span><b>999,999,999원</b></div></div>
+  <div class="card k"><div class="t">구매</div><div class="v">4건 입고</div><div class="r"><span>수량</span><b>50개</b></div><div class="r"><span>합계</span><b>50,000,000원</b></div></div>
+  <div class="card k"><div class="t">재고</div><div class="v">70 품목</div><div class="r"><span>수량</span><b>18,000개</b></div><div class="r"><span>합계</span><b>180,000,000원</b></div></div>
+  <div class="card k"><div class="t">채권</div><div class="v">38,400,000원</div><div class="r2"><span>수금 예정</span><b>0건</b></div></div>
+  <div class="card k"><div class="t">채무</div><div class="v">999,999,999원</div><div class="r2"><span>지급 예정</span><b>0건</b></div></div>
+  <div class="card k"><div class="t">실적</div><div class="v">-999,999,999원</div><div class="r2"><span>이익 · 이익률</span></div></div>
+ </div>
+ <div class="card flow">
+  <h3>선택기간 업무 흐름<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg></h3>
+  <div class="dnav"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>2026.09.16<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div>
+  <div class="chart"><div class="tip"><b>2026.09.16</b><div><span>출고</span><i>5건</i><strong>1,540,000원</strong></div><div><span>입고</span><i>5건</i><strong>1,540,000원</strong></div></div>
+   <div class="bars"><div class="g"><i class="o" style="height:62%"></i><i class="i" style="height:70%"></i></div><div class="g"><i class="o" style="height:55%"></i><i class="i" style="height:66%"></i></div><div class="g sel"><i class="o" style="height:34%"></i><i class="i" style="height:44%"></i></div></div>
+   <svg class="ln" viewBox="0 0 300 126" preserveAspectRatio="none"><path d="M45 52L150 56L255 112" stroke="#27c36f" stroke-width="1.6" stroke-dasharray="4 3"/><path d="M45 112L150 112L255 111" stroke="#105aff" stroke-width="1.8"/></svg>
+   <div class="lbl"><span>9/14</span><span>9/15</span><span class="s">9/16</span></div></div>
+  <div class="leg"><span><u></u>출고 수량</span><span><u class="d"></u>입고 수량</span><span><s style="background:#b9ccfb"></s>출고 금액</span><span><s style="background:#9fdcc2"></s>입고 금액</span></div>
+  <div class="days" id="days">
+   <div class="day"><h4>09.16</h4><div class="dr"><span class="l"><i style="background:#719bfc"></i>출고 (9,999건)</span><span class="r"><span>99,999개</span><b>999,999,999원</b></span></div><div class="dr"><span class="l"><i style="background:#27c36f"></i>입고 (9,999건)</span><span class="r"><span>99,999개</span><b>999,999,999원</b></span></div></div>
+   <div class="day"><h4>09.15</h4><div class="dr"><span class="l"><i style="background:#719bfc"></i>출고 (7건)</span><span class="r"><span>23개</span><b>1,860,000원</b></span></div><div class="dr"><span class="l"><i style="background:#27c36f"></i>입고 (6건)</span><span class="r"><span>23개</span><b>1,860,000원</b></span></div></div>
+   <div class="day empty"><h4>09.14</h4><p style="font-size:14px">아직 실적 없음</p></div>
+  </div>
+  <button class="fold" id="fold">일별 목록 접기<svg viewBox="0 0 24 24" id="fa"><path d="M6 15l6-6 6 6"/></svg></button>
+ </div>
+ <div class="card dept">
+  <div class="h"><span>부서별 실적</span><small>출고 공급가액 | 오늘</small></div>
+  <div class="dr2 sum"><div><div class="n">합계<span class="bd">부서 99곳</span></div><div class="s">출고 9,999건 | 입고 9,999건</div></div><div class="a">999,999,999원</div></div>
+  <div class="dr2"><div><div class="n">영업1부<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div><div class="s">출고 9,999건 | 입고 9,999건</div></div><div class="a">999,999,999원</div></div>
+  <div class="dr2"><div><div class="n">영업2부<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div><div class="s">출고 3건 | 입고 4건</div></div><div class="a">9,140,000원</div></div>
+  <div class="dr2"><div><div class="n">구매1부<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div><div class="s">출고 0건 | 입고 0건</div></div><div class="a" style="color:#999">0원</div></div>
+ </div>
+</div>
+<nav class="gnb"><button class="on"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>대시보드</button><button data-t="거래처"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="10" height="18" rx="1"/><path d="M9 7h2M9 11h2M9 15h2M15 10h4v11h-4"/></svg>거래처</button><button data-t="전체메뉴"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><path d="M17.5 14v7M14 17.5h7"/></svg>전체메뉴</button></nav>
+<div class="home"></div><div class="toast"></div></div>
+<script>
+const $=s=>document.querySelector(s);
+function toast(m){const t=$('.toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2000)}
+document.querySelectorAll('[data-t]').forEach(e=>e.onclick=()=>toast(e.dataset.t+' (다음 단계)'));
+$('#goSearch').onclick=()=>{if(parent!==window)parent.postMessage({gotoMenu:'search'},'*');else location.href='A.html'};
+let open=true;$('#fold').onclick=()=>{open=!open;$('#days').style.display=open?'':'none';$('#fold').firstChild.textContent=open?'일별 목록 접기':'일별 목록 펼치기';$('#fa').innerHTML=open?'<path d="M6 15l6-6 6 6"/>':'<path d="M6 9l6 6 6-6"/>'};
+try{if(parent!==window)parent.postMessage({specPage:1},'*')}catch(e){}
+</script><script src="comments.js"></script><script src="fit.js"></script></body></html>
