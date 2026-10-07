@@ -11,11 +11,11 @@
   function save(c){try{localStorage.setItem(keyOf(c),JSON.stringify(lists[keyOf(c)]))}catch(e){}}
   function conts(){return Array.prototype.slice.call(document.querySelectorAll('.phone,.specwrap'))}
   var st=document.createElement('style');
-  st.textContent='.specwrap{position:relative}.uc-pin{touch-action:none;user-select:none;position:absolute;width:24px;height:24px;margin:-24px 0 0 -2px;border-radius:12px 12px 12px 2px;background:#7a4dff;color:#fff;font:700 12px/24px Pretendard,sans-serif;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.25);z-index:60;cursor:pointer}'+
-  '.uc-box{position:absolute;z-index:70;width:max-content;max-width:200px;min-width:170px;background:#fff;border:1px solid #7a4dff;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.18);padding:10px;font:13px/1.45 Pretendard,sans-serif;color:#333;letter-spacing:-.02em}'+
-  '.uc-box textarea{display:block;width:100%;min-height:60px;border:1px solid #e1e1e1;border-radius:8px;padding:8px;font:inherit;resize:none;outline:0}.uc-box textarea:focus{border-color:#7a4dff}'+
+  st.textContent='.specwrap{position:relative}.uc-pin{touch-action:none;user-select:none;position:absolute;width:24px;height:24px;margin:-24px 0 0 -2px;border-radius:12px 12px 12px 2px;background:#f0384b;color:#fff;font:700 12px/24px Pretendard,sans-serif;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.25);z-index:60;cursor:pointer}'+
+  '.uc-box{position:absolute;z-index:70;width:max-content;max-width:200px;min-width:170px;background:#fff;border:1px solid #f0384b;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.18);padding:10px;font:13px/1.45 Pretendard,sans-serif;color:#333;letter-spacing:-.02em}'+
+  '.uc-box textarea{display:block;width:100%;min-height:60px;border:1px solid #e1e1e1;border-radius:8px;padding:8px;font:inherit;resize:none;outline:0}.uc-box textarea:focus{border-color:#f0384b}'+
   '.uc-box .t{white-space:pre-wrap;word-break:keep-all;overflow-wrap:break-word}'+
-  '.uc-row{display:flex;gap:6px;justify-content:flex-end;margin-top:8px}.uc-row button{height:28px;padding:0 10px;border-radius:6px;border:1px solid #e1e1e1;background:#fff;font:600 12px Pretendard,sans-serif;cursor:pointer;color:#555}.uc-row .ok{background:#7a4dff;border-color:#7a4dff;color:#fff}';
+  '.uc-row{display:flex;gap:6px;justify-content:flex-end;margin-top:8px}.uc-row button{height:28px;padding:0 10px;border-radius:6px;border:1px solid #e1e1e1;background:#fff;font:600 12px Pretendard,sans-serif;cursor:pointer;color:#555}.uc-row .ok{background:#f0384b;border-color:#f0384b;color:#fff}';
   document.head.appendChild(st);
   var box=null;
   function scrollers(p){if(!p.classList.contains('phone'))return [];return Array.prototype.filter.call(p.querySelectorAll('*'),function(n){if(n.closest('.uc-box'))return false;var o=getComputedStyle(n).overflowY;return (o==='auto'||o==='scroll')&&n.scrollHeight>n.clientHeight+2})}
